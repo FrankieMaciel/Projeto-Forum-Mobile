@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
-import {useNavigation} from "@react-navigation/native";
+import { View, Text, TextInput, Pressable } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
 import Login from './Login';
+import { formStyles } from '../styles/form';
 import { Header } from 'react-native-elements';
 import { Titulo } from '../components/Titulo';
-
+import { headerStyles } from '../styles/header';
 
 export default function Cadastro() {
 
@@ -15,24 +16,27 @@ export default function Cadastro() {
     // Por exemplo, você pode fazer uma chamada para uma API para registrar o usuário.
 
     // Após o cadastro bem-sucedido, você pode navegar para outra tela
-    //navigation.navigate("Login");
+    navigation.navigate('Login');
   };
 
   return (
-    <View>
-      <Header
+    <View style={formStyles.containerView}>
+      <Header style={headerStyles.header}
         //centerComponent={{text: "Fórum", style: {color:"#000"} }}
-        centerComponent={<Titulo/>}
+        centerComponent={<Titulo />}
       />
-      
-
-      <Text>Nome</Text>
-      <TextInput />
-      <Text>Email</Text>
-      <TextInput />
-      <Text>Senha</Text>
-      <TextInput secureTextEntry />
-      <Button title="Cadastrar" onPress={handleCadastro} />
+      <View style={formStyles.cardView}>
+        <Text style={formStyles.label}>Nome</Text>
+        <TextInput style={formStyles.input} />
+        <Text style={formStyles.label}>Email</Text>
+        <TextInput style={formStyles.input} />
+        <Text style={formStyles.label}>Senha</Text>
+        <TextInput style={formStyles.input} secureTextEntry />
+        <Pressable style={formStyles.button} onPress={handleCadastro}>
+          <Text style={formStyles.bntText}>Cadastrar</Text>
+        </Pressable>
+      </View>
+      {/* <Button title="Cadastrar" onPress={handleCadastro} color='#afafaf' /> */}
     </View>
   );
 };

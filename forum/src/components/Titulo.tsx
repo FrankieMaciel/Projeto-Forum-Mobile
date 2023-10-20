@@ -1,13 +1,18 @@
-import { Text} from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
-export const Titulo = () =>{
-   return(
-    <>
-    <Text>
-        Fórum
-    </Text>
-    </>
+const styles = StyleSheet.create({
+    text: {
+        color: 'white'
+    }
+})
 
-   );
-    
+export const Titulo = () => {
+    return (
+        <>
+            <Text style={styles.text}>
+                Fórum
+            </Text >
+        </>
+    );
+
 }
