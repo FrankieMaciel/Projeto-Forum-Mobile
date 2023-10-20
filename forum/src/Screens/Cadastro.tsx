@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
-import { Navigation } from 'react-native-navigation';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from "@react-navigation/native";
 import Login from './Login';
+import { Header } from 'react-native-elements';
+import { Titulo } from '../components/Titulo';
+
 
 export default function Cadastro() {
+
   const navigation = useNavigation();
 
   const handleCadastro = () => {
@@ -12,11 +15,17 @@ export default function Cadastro() {
     // Por exemplo, você pode fazer uma chamada para uma API para registrar o usuário.
 
     // Após o cadastro bem-sucedido, você pode navegar para outra tela
-    // navigation.navigate("Login", {});
+    //navigation.navigate("Login");
   };
 
   return (
     <View>
+      <Header
+        //centerComponent={{text: "Fórum", style: {color:"#000"} }}
+        centerComponent={<Titulo/>}
+      />
+      
+
       <Text>Nome</Text>
       <TextInput />
       <Text>Email</Text>

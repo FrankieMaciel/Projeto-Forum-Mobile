@@ -13,9 +13,9 @@ const stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <stack.Navigator initialRouteName="Cadastro">
-        <stack.Screen name="Login" component={Login} />
+      <stack.Navigator /* initialRouteName="Cadastro" */>
         <stack.Screen name="Cadastro" component={Cadastro} />
+        <stack.Screen name="Login" component={Login} />
       </stack.Navigator>
     </NavigationContainer>
   );

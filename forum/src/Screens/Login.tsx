@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Header } from 'react-native-elements';
+import { Titulo } from '../components/Titulo';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -15,6 +17,9 @@ export default function Login() {
 
   return (
     <View>
+      <Header
+        centerComponent={<Titulo/>}
+      />
       <Text>Login</Text>
       <TextInput placeholder="Email" />
       <TextInput placeholder="Senha" secureTextEntry />
