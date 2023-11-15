@@ -20,7 +20,7 @@ export default function App() {
       <stack.Navigator
         screenOptions={TransitionPresets.SlideFromRightIOS}
        /* initialRouteName="Cadastro" */>
-        <stack.Screen name="Cadastrar" component={Cadastro} options={{ headerShown: false }} />
+        <stack.Screen name="Cadastrar" component={Cadastro} options={{ headerShown: false, headerStyle: {backgroundColor: '#ffffff'}}} />
         <stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       </stack.Navigator>
     </NavigationContainer>

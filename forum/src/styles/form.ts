@@ -1,21 +1,35 @@
 import { StyleSheet } from 'react-native';
+import vars from './root';
 
 export const formStyles = StyleSheet.create({
   containerView: {
-    backgroundColor: '#171a30',
+    backgroundColor: vars.bg,
     flex: 1,
     alignItems: 'center',
   },
   cardView: {
-    backgroundColor: '#232a55',
+    backgroundColor: vars.bg2,
     borderRadius: 10,
-    width: 300,
+    width: 370,
     marginTop: 100,
     padding: 20
   },
+  cardTitle: {
+  },
+  title: {
+    color: '#fff',
+    fontSize: vars.fontSizeTitle,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  subtitle: {
+    color: vars.mainText,
+    fontSize: vars.mainFontSize,
+    textAlign: 'center'
+  },
   label: {
     color: 'white',
-    fontSize: 24,
+    fontSize: vars.mainFontSize,
     marginTop: 10,
     marginLeft: 10,
     marginBottom: 5
@@ -40,6 +54,7 @@ export const formStyles = StyleSheet.create({
   bntText: {
     textAlign: 'center',
     fontSize: 18,
-    color: 'black'
+    fontWeight: 'bold',
+    color: vars.innerText
   }
 })
