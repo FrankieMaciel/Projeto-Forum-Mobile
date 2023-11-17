@@ -7,13 +7,14 @@ export function MenuCard() {
 
   return (
     <View>
-      <Text>Criar conta!</Text>
+      <Text>Criar conta</Text>
       <Text>Entrar</Text>
       <X
         stroke={vars.mainText} 
         fill="#00000000" 
         width={20} 
         height={20}
+
       />
     </View>
   )
