@@ -3,6 +3,7 @@ export declare global {
     interface RootParamList {
       Login: { numero: number } | undefined;
       Cadastro: { numero: number } | undefined;
+      Homepage: {numero: number} | undefined;
     }
   }
 }

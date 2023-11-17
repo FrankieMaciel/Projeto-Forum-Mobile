@@ -1,11 +1,13 @@
 const vars = {
-  bg: '#171a30',
-  bg2: '#232a55',
-  bgWhite: '#ffffff',
-  mainText: '#ffffff',
-  textLight: '#aaaaaa',
-  innerText: '#000000',
+  bg: "#171a30",
+  bg2: "#232a55",
+  bg3: "#3e477F",
+  bgLight: "#f1f2f8",
+  bgWhite: "#fff",
+  mainText: "#fff",
+  textLight: "#babcd6",
+  innerText: "#000",
   mainFontSize: 15,
   fontSizeTitle: 30,
-}
+};
 export default vars;

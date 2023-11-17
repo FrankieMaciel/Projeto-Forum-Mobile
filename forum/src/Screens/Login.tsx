@@ -14,7 +14,7 @@ export default function Login() {
     // Por exemplo, você pode fazer uma chamada para uma API para registrar o usuário.
 
     // Após o Login bem-sucedido, você pode navegar para outra tela
-    // navigation.navigate('ExemploScreen');
+    navigation.navigate('Homepage');
   };
 
   return (

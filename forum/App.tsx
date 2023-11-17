@@ -9,6 +9,7 @@ import { TransitionPresets } from '@react-navigation/stack';
 
 import Cadastro from "./src/Screens/Cadastro";
 import Login from "./src/Screens/Login";
+import { Homepage } from './src/Screens/Homepage';
 
 const stack = createStackNavigator();
 
@@ -19,9 +20,11 @@ export default function App() {
     <NavigationContainer>
       <stack.Navigator
         screenOptions={TransitionPresets.SlideFromRightIOS}
-       /* initialRouteName="Cadastro" */>
+        initialRouteName="Homepage"
+        >
         <stack.Screen name="Cadastrar" component={Cadastro} options={{ headerShown: false, headerStyle: {backgroundColor: '#ffffff'}}} />
         <stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+        <stack.Screen name="Homepage" component={Homepage} options={{ headerShown: false }} />
       </stack.Navigator>
     </NavigationContainer>
   );
