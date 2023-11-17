@@ -7,7 +7,7 @@ export function MenuCard() {
 
   return (
     <View>
-      <Text>Criar conta</Text>
+      <Text>Criar conta!</Text>
       <Text>Entrar</Text>
       <X
         stroke={vars.mainText} 
