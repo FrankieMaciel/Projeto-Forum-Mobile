@@ -4,6 +4,7 @@ const vars = {
   bg3: "#3e477F",
   bgLight: "#f1f2f8",
   bgWhite: "#fff",
+  danger: "#b00",
   mainText: "#fff",
   textLight: "#babcd6",
   innerText: "#000",

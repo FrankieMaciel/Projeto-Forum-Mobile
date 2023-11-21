@@ -13,15 +13,19 @@ const styles = StyleSheet.create({
         paddingTop: 30
     },
     text: {
+        position: 'absolute',
         color: vars.mainText,
         textAlign: 'center',
         fontSize: 25,
         fontWeight: 'bold',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        width: '100%',
+        top: 30
     },
     icon: {
         alignSelf: 'center',
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        zIndex: 5,
     },
     circleIcon: {
         width: 30,
@@ -29,8 +33,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: 'white',
         alignSelf: 'center',
-        marginHorizontal: 10
-      }
+        marginHorizontal: 10,
+        zIndex: 5
+    }
 })
 
 export const Titulo = () => (
@@ -42,17 +47,17 @@ export const Titulo = () => (
 export const HomeTitulo = () => (
     <View style={styles.header}>
         <Menu
-            stroke={vars.mainText} 
-            fill="#00000000" 
-            width={20} 
+            stroke={vars.mainText}
+            fill="#00000000"
+            width={20}
             height={20}
             style={styles.icon}
         />
         <Text style={styles.text}>Fórum</Text>
         <Search
-            stroke={vars.mainText} 
+            stroke={vars.mainText}
             fill="#00000000"
-            width={20} 
+            width={20}
             height={20}
             style={styles.icon}
         />
@@ -60,15 +65,14 @@ export const HomeTitulo = () => (
 )
 export const PageTitulo = () => (
     <View style={styles.header}>
-      <View style={styles.circleIcon} />
-      <Text style={styles.text}>Fórum</Text>
-      <Search
-        stroke={vars.mainText}
-        fill="#00000000"
-        width={20}
-        height={20}
-        style={styles.icon}
-      />
+        <View style={styles.circleIcon} />
+        <Text style={styles.text}>Fórum</Text>
+        <Search
+            stroke={vars.mainText}
+            fill="#00000000"
+            width={20}
+            height={20}
+            style={styles.icon}
+        />
     </View>
-  );
-  
+);
