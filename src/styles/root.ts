@@ -10,5 +10,7 @@ const vars = {
   innerText: "#000",
   mainFontSize: 15,
   fontSizeTitle: 30,
+  gray: "#BCBCBC",
+  softGray: "#E0E0E0",
 };
 export default vars;
