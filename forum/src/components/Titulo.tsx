@@ -22,7 +22,15 @@ const styles = StyleSheet.create({
     icon: {
         alignSelf: 'center',
         marginHorizontal: 10
-    }
+    },
+    circleIcon: {
+        width: 30,
+        height: 30,
+        borderRadius: 10,
+        backgroundColor: 'white',
+        alignSelf: 'center',
+        marginHorizontal: 10
+      }
 })
 
 export const Titulo = () => (
@@ -50,3 +58,17 @@ export const HomeTitulo = () => (
         />
     </View>
 )
+export const PageTitulo = () => (
+    <View style={styles.header}>
+      <View style={styles.circleIcon} />
+      <Text style={styles.text}>Fórum</Text>
+      <Search
+        stroke={vars.mainText}
+        fill="#00000000"
+        width={20}
+        height={20}
+        style={styles.icon}
+      />
+    </View>
+  );
+  
