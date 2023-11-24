@@ -42,13 +42,27 @@ export const formStyles = StyleSheet.create({
     paddingHorizontal: 15,
     fontSize: 20,
   },
+  changeForm: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 5,
+    marginTop: 20,
+  },
+  changeFormText: {
+    color: vars.mainText,
+    textAlign: 'center',
+  },
+  changeFormLink: {
+    color: '#7df',
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+  },
   button: {
-    backgroundColor: 'white',
+    backgroundColor: vars.bgWhite,
     borderRadius: 50,
     width: 150,
     padding: 10,
-    marginTop: 30,
-    marginBottom: 10,
+    marginTop: 20,
     alignSelf: 'center'
   },
   bntText: {
@@ -56,5 +70,19 @@ export const formStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: vars.innerText
+  },
+  arrowBack: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignContent: 'center',
+    gap: 5,
+    top: 120,
+    left: 20
+  },
+  backText: {
+    color: vars.mainText,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 18
   }
 })

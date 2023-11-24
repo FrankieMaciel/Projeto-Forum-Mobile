@@ -1,25 +1,30 @@
-import React from 'react';
-import { View, Text, TextInput, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import Login from './Login';
 import { Header } from 'react-native-elements';
 import { Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
+import { ArrowLeft } from 'react-native-feather';
 
 import axios from 'axios';
 
-const host = '192.168.2.3';
+const host = '192.168.0.110';
 
 export default function Cadastro() {
+
+  const [emailText, setEmailText] = useState('');
+  const [usernameText, setUsernameText] = useState('');
+  const [passwordText, setPasswordText] = useState('');
 
   const navigation = useNavigation();
 
   const handleCadastro = async () => {
-    
+
     const dataToSend = {
-      username: 'sabaocracra',
-      email: 'sabao@gmail.com',
-      password: '12345'
+      username: usernameText,
+      email: emailText,
+      password: passwordText
     };
 
     const fetchData = async () => {
@@ -35,12 +40,35 @@ export default function Cadastro() {
 
     // Chame a função para fazer a requisição
     fetchData();
-    navigation.navigate('Login');
+    navigation.navigate('Dashboard');
   };
+
+  function Login() {
+    navigation.navigate('Login');
+  }
+
+  function getEmail(EmailText: string) {
+    setEmailText(EmailText);
+  }
+
+  function getUsername(usernameText: string) {
+    setUsernameText(usernameText);
+  }
+
+  function getPassword(passwordText: string) {
+    setPasswordText(passwordText);
+  }
 
   return (
     <View style={formStyles.containerView}>
       <Titulo></Titulo>
+      <TouchableOpacity style={formStyles.arrowBack} onPress={Login}>
+        <ArrowLeft
+          fill="#00000000"
+          stroke="#fff"
+        />
+        <Text style={formStyles.backText}>Voltar</Text>
+      </TouchableOpacity>
       <View style={formStyles.cardView}>
         <View style={formStyles.cardTitle}>
           <Text style={formStyles.title}>Criar conta</Text>
@@ -48,22 +76,21 @@ export default function Cadastro() {
         </View>
 
         <Text style={formStyles.label}>Nome</Text>
-        <TextInput style={formStyles.input} />
-        
+        <TextInput onChangeText={getUsername} style={formStyles.input} />
+
         <Text style={formStyles.label}>Email</Text>
-        <TextInput style={formStyles.input} />
+        <TextInput onChangeText={getEmail} style={formStyles.input} />
 
         <Text style={formStyles.label}>Senha</Text>
-        <TextInput style={formStyles.input} secureTextEntry />
+        <TextInput onChangeText={getPassword} style={formStyles.input} secureTextEntry />
 
         <Text style={formStyles.label}>Repetir senha</Text>
         <TextInput style={formStyles.input} secureTextEntry />
-        
+
         <Pressable style={formStyles.button} onPress={handleCadastro}>
           <Text style={formStyles.bntText}>Cadastrar</Text>
         </Pressable>
       </View>
-      {/* <Button title="Cadastrar" onPress={handleCadastro} color='#afafaf' /> */}
     </View>
   );
 };

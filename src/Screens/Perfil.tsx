@@ -13,9 +13,11 @@ export function Profile() {
         <View style={profileStyles.picture}></View>
         <View style={profileStyles.info}>
           <Text style={profileStyles.name}>Fulano de num sei o quem</Text>
+          <Text style={profileStyles.infoText}>fulano_sla@email.com</Text>
+          <Text style={profileStyles.infoText}>0 pontos</Text>
           <View style={profileStyles.options}>
             <Pressable style={profileStyles.optionsBtn}>
-              <Text style={profileStyles.btnText}>Editar</Text>
+              <Text style={profileStyles.btnText}>Editar Perfil</Text>
             </Pressable>
             <Pressable style={[profileStyles.optionsBtn, profileStyles.deletePfBtn]}>
               <Text style={[profileStyles.btnText, profileStyles.deleteBtnText]}>Deletar conta</Text>
@@ -23,9 +25,12 @@ export function Profile() {
           </View>
         </View>
       </View>
-      <View style={profileStyles.posts}>
+      <Pressable style={profileStyles.optionsBtn}>
+        <Text style={profileStyles.btnText}>Ver postagens</Text>
+      </Pressable>
+      {/* <View style={profileStyles.posts}>
         <PostCard></PostCard>
-      </View>
+      </View> */}
     </View>
   );
 }

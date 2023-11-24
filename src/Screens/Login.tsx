@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, Button, Pressable } from 'react-native';
+import { View, Text, TextInput, Button, Pressable, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Header } from 'react-native-elements';
 import { Titulo } from '../components/Titulo';
@@ -10,17 +10,17 @@ export default function Login() {
   const navigation = useNavigation();
 
   const handleLogin = () => {
-    // Coloque aqui a lógica para lidar com o Login
-    // Por exemplo, você pode fazer uma chamada para uma API para registrar o usuário.
+    navigation.navigate('Dashboard');
+  };
 
-    // Após o Login bem-sucedido, você pode navegar para outra tela
-    navigation.navigate('Homepage');
+  const Cadastrar = () => {
+    navigation.navigate('Cadastrar');
   };
 
   return (
     <View style={formStyles.containerView}>
-        <Titulo></Titulo>
-    
+      <Titulo></Titulo>
+
       <View style={formStyles.cardView}>
         <View style={formStyles.cardTitle}>
           <Text style={formStyles.title}>Entrar na conta</Text>
@@ -33,8 +33,14 @@ export default function Login() {
         <Pressable style={formStyles.button} onPress={handleLogin}>
           <Text style={formStyles.bntText}>Entrar</Text>
         </Pressable>
+        <View style={formStyles.changeForm}>
+          <Text style={formStyles.changeFormText}>Não tem uma conta ainda?
+          </Text>
+          <TouchableOpacity onPress={Cadastrar}>
+            <Text style={formStyles.changeFormLink}>Crie uma conta</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      {/* <Button title="Cadastrar" onPress={handleCadastro} color='#afafaf' /> */}
     </View>
   );
 };

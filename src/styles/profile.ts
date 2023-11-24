@@ -4,8 +4,8 @@ import vars from "./root";
 export const profileStyles = StyleSheet.create({
   background: {
     display: 'flex',
-    flexDirection: 'row',
-    gap: 20,
+    gap: 10,
+    alignItems: 'center',
     backgroundColor: vars.bg2,
     borderRadius: 20,
     width: '91%',
@@ -14,22 +14,29 @@ export const profileStyles = StyleSheet.create({
   },
   picture: {
     backgroundColor: 'white',
-    borderRadius: 10,
-    width: 80,
-    height: 80
+    borderRadius: 40,
+    width: 200,
+    height: 200
   },
   info: {
     justifyContent: 'space-between'
   },
   name: {
     color: vars.mainText,
+    textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 17
+    fontSize: 25
+  },
+  infoText: {
+    color: vars.textLight,
+    fontSize: 18
   },
   options: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 20
+    justifyContent: 'space-evenly',
+    gap: 20,
+    marginTop: 10
   },
   optionsBtn: {
     backgroundColor: vars.bgWhite,
