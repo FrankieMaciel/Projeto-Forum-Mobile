@@ -48,7 +48,6 @@ export const searchStyles = StyleSheet.create({
   searchIcon: {
     position: "absolute",
     zIndex: 10,
-    backgroundColor: vars.bgWhite,
     width: 30,
     height: 30,
     justifyContent: "center",

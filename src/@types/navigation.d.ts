@@ -6,6 +6,7 @@ export declare global {
       Dashboard: { numero: number } | undefined;
       PageInitial: { numero: number } | undefined;
       Profile: { numero: number } | undefined;
+      Search: { numero: number } | undefined;
     }
   }
 }

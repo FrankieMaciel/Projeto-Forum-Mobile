@@ -31,7 +31,7 @@ export function SearchScreen(){
               <Text>Pessoas</Text>
             </TouchableOpacity>
             <TouchableOpacity style={searchStyles.button}>
-              <Text>posts</Text>
+              <Text>Posts</Text>
             </TouchableOpacity>
           </View>
         </View>

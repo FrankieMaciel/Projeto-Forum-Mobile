@@ -51,5 +51,10 @@ export const profileStyles = StyleSheet.create({
   deleteBtnText: {
     color: vars.mainText
   },
-  posts: {}
+  seePostsBtn: {
+
+  },
+  seePostsBtnText: {
+    fontSize: 20
+  }
 })

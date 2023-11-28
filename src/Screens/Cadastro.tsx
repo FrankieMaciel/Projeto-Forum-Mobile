@@ -8,8 +8,7 @@ import { formStyles } from '../styles/form';
 import { ArrowLeft } from 'react-native-feather';
 
 import axios from 'axios';
-
-const host = '192.168.0.110';
+import host from './host';
 
 export default function Cadastro() {
 
@@ -79,7 +78,7 @@ export default function Cadastro() {
         <TextInput onChangeText={getUsername} style={formStyles.input} />
 
         <Text style={formStyles.label}>Email</Text>
-        <TextInput onChangeText={getEmail} style={formStyles.input} />
+        <TextInput onChangeText={getEmail} style={formStyles.input}  inputMode='email' keyboardType='email-address' autoCapitalize='none' autoCorrect={false}/>
 
         <Text style={formStyles.label}>Senha</Text>
         <TextInput onChangeText={getPassword} style={formStyles.input} secureTextEntry />

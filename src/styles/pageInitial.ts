@@ -12,6 +12,9 @@ export const pageStyles = StyleSheet.create({
         textAlign:'center',
         position: 'absolute',
         right: 40,
+    },
+    cardComponent:{
+        
     }
  
 })

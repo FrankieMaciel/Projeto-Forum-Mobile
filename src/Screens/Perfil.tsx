@@ -4,8 +4,16 @@ import { Titulo } from "../components/Titulo";
 import { PostCard } from "../components/Post";
 import { homeStyles } from "../styles/home";
 import { profileStyles } from "../styles/profile";
+import { useNavigation } from "@react-navigation/native";
 
 export function Profile() {
+
+  const navigation = useNavigation();
+
+  function VerPostagens() {
+    navigation.navigate('Search');
+  }
+
   return (
     <View style={homeStyles.containerView}>
       <Titulo></Titulo>
@@ -25,8 +33,8 @@ export function Profile() {
           </View>
         </View>
       </View>
-      <Pressable style={profileStyles.optionsBtn}>
-        <Text style={profileStyles.btnText}>Ver postagens</Text>
+      <Pressable style={[profileStyles.optionsBtn, profileStyles.seePostsBtn]} onPress={VerPostagens}>
+        <Text style={[profileStyles.btnText, profileStyles.seePostsBtnText]}>Ver postagens</Text>
       </Pressable>
       {/* <View style={profileStyles.posts}>
         <PostCard></PostCard>
