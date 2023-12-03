@@ -6,6 +6,7 @@ import { Header } from 'react-native-elements';
 import { Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
 import { ArrowLeft } from 'react-native-feather';
+import { _retrieveData, _storeData } from '../utils/token';
 
 import axios from 'axios';
 import host from './host';
@@ -27,19 +28,19 @@ export default function Cadastro() {
     };
 
     const fetchData = async () => {
-      try {
-        // Fazendo uma requisição GET para um endpoint de exemplo
-        const response = await axios.post(`http://${host}:3000/user`, dataToSend);
+      await axios.post(`http://${host}:3000/users`, dataToSend)
+      .then(async (response) => {
         console.log('Dados recebidos:', response.data);
-      } catch (error) {
-        // Se ocorrer um erro na requisição
-        console.error('Erro ao fazer a requisição:', error);
-      }
+        if (response.data.token) {
+          await _storeData(response.data.token);
+          navigation.navigate('Dashboard');
+        } else {
+          let erroMessage = JSON.parse(response.data.error);
+          console.log(erroMessage[0]);
+        }
+      })
     };
-
-    // Chame a função para fazer a requisição
     fetchData();
-    navigation.navigate('Dashboard');
   };
 
   function Login() {

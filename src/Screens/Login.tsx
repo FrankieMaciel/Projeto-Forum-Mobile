@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, Pressable, TouchableOpacity } from 'reac
 import { useNavigation } from '@react-navigation/native';
 import { Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { _retrieveData, _storeData } from '../utils/token';
 import axios from 'axios';
 import host from './host';
 
@@ -14,7 +14,7 @@ export default function Login() {
 
   const navigation = useNavigation();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
 
     const dataToSend = {
       email: emailText,
@@ -22,30 +22,22 @@ export default function Login() {
     };
 
     const fetchData = async () => {
-      try {
-        const response = await axios.post(`http://${host}:3000/users/login/`, dataToSend);
-        console.log('Teste');
-        console.log('Dados recebidos:', response.data);
+      await axios.post(`http://${host}:3000/users/login/`, dataToSend)
+      .then((response) => {
         if (response.data.token) {
+          console.log('Dados recebidos:', response.data);
           _storeData(response.data.token);
           navigation.navigate('Dashboard');
+        } else {
+          let erroMessage = JSON.parse(response.data.error);
+          console.log(erroMessage[0]);
         }
-      } catch (error) {
-        console.error('Erro ao fazer a requisição:', error);
-      }
+      })
     };
-    fetchData();
-  };
-
-  const _storeData = async (token: string) => {
-    try {
-      await AsyncStorage.setItem(
-        '@AcessToken:key',
-        token,
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    await fetchData()
+    .then(async () => {
+      console.log(await _retrieveData());
+    });
   };
 
   const Cadastrar = () => {
