@@ -3,7 +3,8 @@ import { View, Text, TextInput, Button, Pressable, TouchableOpacity } from 'reac
 import { useNavigation } from '@react-navigation/native';
 import { Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
-import { _retrieveData, _storeData } from '../utils/token';
+import * as Token from '../utils/token';
+import * as UserData from '../utils/userData'
 import axios from 'axios';
 import host from './host';
 
@@ -23,21 +24,30 @@ export default function Login() {
 
     const fetchData = async () => {
       await axios.post(`http://${host}:3000/users/login/`, dataToSend)
-      .then((response) => {
-        if (response.data.token) {
-          console.log('Dados recebidos:', response.data);
-          _storeData(response.data.token);
-          navigation.navigate('Dashboard');
-        } else {
-          let erroMessage = JSON.parse(response.data.error);
-          console.log(erroMessage[0]);
-        }
-      })
+        .then((response) => {
+          const data = response.data;
+          if (data.token) {
+            console.log('Dados recebidos:', data);
+            Token._storeData(data.token);
+            UserData._storeData({
+              username: data.username,
+              email: data.email,
+              pfpURL: data.pfpURL,
+              score: data.score
+            })
+            navigation.navigate('Dashboard');
+          } else {
+            let erroMessage = JSON.parse(data.error);
+            throw new Error(erroMessage[0]);
+          }
+        })
+        .catch(error => console.error('Erro ao receber informações do login: ', error))
     };
     await fetchData()
-    .then(async () => {
-      console.log(await _retrieveData());
-    });
+      .then(async () => {
+        console.log(await Token._retrieveData());
+        console.log(await UserData._retrieveData());
+      });
   };
 
   const Cadastrar = () => {
@@ -62,7 +72,7 @@ export default function Login() {
           <Text style={formStyles.subtitle}>Entre em sua conta abaixo</Text>
         </View>
         <Text style={formStyles.label}>Email</Text>
-        <TextInput onChangeText={getEmail} style={formStyles.input} inputMode='email' keyboardType='email-address' autoCapitalize='none' autoCorrect={false}/>
+        <TextInput onChangeText={getEmail} style={formStyles.input} inputMode='email' keyboardType='email-address' autoCapitalize='none' autoCorrect={false} />
         <Text style={formStyles.label}>Senha</Text>
         <TextInput onChangeText={getPassword} style={formStyles.input} secureTextEntry />
         <TouchableOpacity style={formStyles.button} onPress={handleLogin}>

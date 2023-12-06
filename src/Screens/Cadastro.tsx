@@ -6,7 +6,8 @@ import { Header } from 'react-native-elements';
 import { Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
 import { ArrowLeft } from 'react-native-feather';
-import { _retrieveData, _storeData } from '../utils/token';
+import * as Token from '../utils/token';
+import * as UserData from '../utils/userData';
 
 import axios from 'axios';
 import host from './host';
@@ -29,16 +30,23 @@ export default function Cadastro() {
 
     const fetchData = async () => {
       await axios.post(`http://${host}:3000/users`, dataToSend)
-      .then(async (response) => {
-        console.log('Dados recebidos:', response.data);
-        if (response.data.token) {
-          await _storeData(response.data.token);
-          navigation.navigate('Dashboard');
-        } else {
-          let erroMessage = JSON.parse(response.data.error);
-          console.log(erroMessage[0]);
-        }
-      })
+        .then(async (response) => {
+          const data = response.data;
+          console.log('Dados recebidos:', data);
+          if (data.token) {
+            await Token._storeData(data.token);
+            await UserData._storeData({
+              username: dataToSend.username,
+              email: dataToSend.email,
+              pfpURL: '',
+              score: 0
+            })
+            navigation.navigate('Dashboard');
+          } else {
+            let erroMessage = JSON.parse(data.error);
+            console.log(erroMessage[0]);
+          }
+        })
     };
     fetchData();
   };
@@ -79,7 +87,7 @@ export default function Cadastro() {
         <TextInput onChangeText={getUsername} style={formStyles.input} />
 
         <Text style={formStyles.label}>Email</Text>
-        <TextInput onChangeText={getEmail} style={formStyles.input}  inputMode='email' keyboardType='email-address' autoCapitalize='none' autoCorrect={false}/>
+        <TextInput onChangeText={getEmail} style={formStyles.input} inputMode='email' keyboardType='email-address' autoCapitalize='none' autoCorrect={false} />
 
         <Text style={formStyles.label}>Senha</Text>
         <TextInput onChangeText={getPassword} style={formStyles.input} secureTextEntry />
