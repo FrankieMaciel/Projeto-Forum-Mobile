@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
-import Login from './Login';
-import { Header } from 'react-native-elements';
 import { Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
 import { ArrowLeft } from 'react-native-feather';
@@ -36,9 +34,10 @@ export default function Cadastro() {
           if (data.token) {
             await Token._storeData(data.token);
             await UserData._storeData({
-              username: dataToSend.username,
-              email: dataToSend.email,
-              pfpURL: '',
+              id: data.id,
+              username: data.username,
+              email: data.email,
+              profileURL: data.profileURL,
               score: 0
             })
             navigation.navigate('Dashboard');

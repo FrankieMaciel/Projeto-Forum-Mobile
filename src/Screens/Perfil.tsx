@@ -40,33 +40,35 @@ export function Profile() {
   }
 
   return (
-    <View style={homeStyles.containerView}>
+    <View>
       <Titulo></Titulo>
-      <View style={profileStyles.background}>
-        <View style={profileStyles.picture}></View>
-        <View style={profileStyles.info}>
-          <Text style={profileStyles.name}>{profileName}</Text>
-          <Text style={profileStyles.infoText}>{profileEmail}</Text>
-          <Text style={profileStyles.infoText}>{profileScore} pontos</Text>
-          <View style={profileStyles.options}>
-            <Pressable style={profileStyles.optionsBtn}>
-              <Text style={profileStyles.btnText}>Editar Perfil</Text>
-            </Pressable>
-            <Pressable style={profileStyles.optionsBtn} onPress={Logout}>
-              <Text style={profileStyles.btnText}>Sair</Text>
-            </Pressable>
-            <Pressable style={[profileStyles.optionsBtn, profileStyles.deletePfBtn]}>
-              <Text style={[profileStyles.btnText, profileStyles.deleteBtnText]}>Deletar conta</Text>
-            </Pressable>
+      <View style={homeStyles.containerView}>
+        <View style={profileStyles.background}>
+          <View style={profileStyles.picture}></View>
+          <View style={profileStyles.info}>
+            <Text style={profileStyles.name}>{profileName}</Text>
+            <Text style={profileStyles.infoText}>{profileEmail}</Text>
+            <Text style={profileStyles.infoText}>{profileScore} pontos</Text>
+            <View style={profileStyles.options}>
+              <Pressable style={profileStyles.optionsBtn}>
+                <Text style={profileStyles.btnText}>Editar Perfil</Text>
+              </Pressable>
+              <Pressable style={profileStyles.optionsBtn} onPress={Logout}>
+                <Text style={profileStyles.btnText}>Sair</Text>
+              </Pressable>
+              <Pressable style={[profileStyles.optionsBtn, profileStyles.deletePfBtn]}>
+                <Text style={[profileStyles.btnText, profileStyles.deleteBtnText]}>Deletar conta</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
-      </View>
-      <Pressable style={[profileStyles.optionsBtn, profileStyles.seePostsBtn]} onPress={VerPostagens}>
-        <Text style={[profileStyles.btnText, profileStyles.seePostsBtnText]}>Ver postagens</Text>
-      </Pressable>
-      {/* <View style={profileStyles.posts}>
+        <Pressable style={[profileStyles.optionsBtn, profileStyles.seePostsBtn]} onPress={VerPostagens}>
+          <Text style={[profileStyles.btnText, profileStyles.seePostsBtnText]}>Ver postagens</Text>
+        </Pressable>
+        {/* <View style={profileStyles.posts}>
         <PostCard></PostCard>
       </View> */}
+      </View>
     </View>
   );
 }

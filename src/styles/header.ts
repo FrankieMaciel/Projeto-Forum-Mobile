@@ -9,7 +9,8 @@ export const headerStyles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     height: 100,
-    paddingTop: 30
+    paddingTop: 30,
+    top: 0
   },
   DarkHeader: {
     display: 'flex',

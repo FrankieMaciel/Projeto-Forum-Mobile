@@ -32,8 +32,17 @@ const _deleteData = async () => {
   }
 }
 
+const _getHeader = async () => {
+  return {
+    headers: {
+      'Authorization': await _retrieveData()
+    }
+  }
+}
+
 export {
   _retrieveData,
   _storeData,
-  _deleteData
+  _deleteData,
+  _getHeader
 }

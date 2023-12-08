@@ -5,8 +5,8 @@ export const postStyles = StyleSheet.create({
   containerView: {
     display: 'flex',
     backgroundColor: vars.bg3,
-    minHeight: '30%',
-    width: '95%',
+    // minHeight: '22%',
+    // width: '95%',
     marginTop: 20,
     borderRadius: 10,
     // justifyContent: 'center',
@@ -29,7 +29,6 @@ export const postStyles = StyleSheet.create({
   },
   textBG: {
     backgroundColor: vars.bgLight,
-    minHeight: '14.2%',
     borderRadius: 10,
     padding: 10,
     marginTop: 20,

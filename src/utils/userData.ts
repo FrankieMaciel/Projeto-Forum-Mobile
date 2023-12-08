@@ -1,10 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface IUserData {
+  id: string;
   username: string;
   email: string;
   score: number;
-  pfpURL: string
+  profileURL: string
 }
 
 const _retrieveData = async () => {
@@ -28,6 +29,8 @@ const _storeData = async (data: IUserData) => {
 const _deleteData = async () => {
   try {
     await AsyncStorage.removeItem('@UserData:key');
+    console.log(await AsyncStorage.getItem('@UserData:key'));
+
   } catch (error) {
     console.error('Erro ao deletar dados do usuário: ', error);
   }

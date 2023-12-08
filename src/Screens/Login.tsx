@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Pressable, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+import host from './host';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
 import * as Token from '../utils/token';
 import * as UserData from '../utils/userData'
-import axios from 'axios';
-import host from './host';
 
 export default function Login() {
 
@@ -30,9 +30,10 @@ export default function Login() {
             console.log('Dados recebidos:', data);
             Token._storeData(data.token);
             UserData._storeData({
+              id: data.id,
               username: data.username,
               email: data.email,
-              pfpURL: data.pfpURL,
+              profileURL: data.profileURL,
               score: data.score
             })
             navigation.navigate('Dashboard');
@@ -49,6 +50,15 @@ export default function Login() {
         console.log(await UserData._retrieveData());
       });
   };
+
+  const logUser = async () => {
+    const data = await UserData._retrieveData();
+    if (data) navigation.navigate('Dashboard');
+  }
+
+  useEffect(() => {
+    logUser();
+  }, [])
 
   const Cadastrar = () => {
     navigation.navigate('Cadastrar');
