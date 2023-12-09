@@ -37,10 +37,17 @@ export const CardStyle = StyleSheet.create({
     inputTexto: {
         backgroundColor: vars.bgWhite,
         color: vars.innerText,
+        textAlignVertical: 'top',
         borderRadius: 10,
-        paddingVertical: 5,
+        padding: 10,
         fontSize: 20,
         height: 130
+    },
+    textCount: {
+        color: vars.textLight,
+        textAlign: 'right',
+        paddingHorizontal: 10,
+        marginVertical: 5
     },
     botaoText: {
         color: vars.innerText,
@@ -51,11 +58,10 @@ export const CardStyle = StyleSheet.create({
         backgroundColor: vars.bgWhite,
         borderRadius: 30,
         padding: 10,
-        marginTop: 20,
         marginHorizontal: '25%'
     },
     fechar: {
         left: 150,
-        marginBottom: 30,
+        marginBottom: 20,
     }
 })

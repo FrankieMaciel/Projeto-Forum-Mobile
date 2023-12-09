@@ -1,5 +1,3 @@
-import axios from "axios";
-import host from "../Screens/host";
 import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { X } from 'react-native-feather';
@@ -16,6 +14,7 @@ export function CriarPostagem(props: Props) {
 
     const [inputTitulo, setInputTitulo] = useState('');
     const [inputTexto, setInputTexto] = useState('');
+    const maxInputTexto = 500;
 
     const { closeFunc } = props;
 
@@ -31,6 +30,7 @@ export function CriarPostagem(props: Props) {
             title: inputTitulo,
             content: inputTexto,
         }
+        console.log(dataToSend);
 
         const fetchData = async () => {
             const forumApi = await getForumApi();
@@ -62,6 +62,7 @@ export function CriarPostagem(props: Props) {
                 <View style={CardStyle.inputView}>
                     <TextInput style={CardStyle.inputTitulo}
                         placeholder="Título"
+                        maxLength={50}
                         onChangeText={setInputTitulo}
                     ></TextInput>
 
@@ -69,8 +70,10 @@ export function CriarPostagem(props: Props) {
                         style={CardStyle.inputTexto}
                         multiline={true}
                         numberOfLines={20}
+                        maxLength={maxInputTexto}
                         onChangeText={setInputTexto}
                     ></TextInput>
+                    <Text style={CardStyle.textCount}>{inputTexto.length}/{maxInputTexto}</Text>
 
                     <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleCreatePost}>
                         <Text style={CardStyle.botaoText}>Criar Postagem</Text>

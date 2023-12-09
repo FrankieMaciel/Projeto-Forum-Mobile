@@ -1,5 +1,3 @@
-import axios from "axios";
-import host from "./host";
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView, View, Text, TouchableOpacity, RefreshControl } from "react-native";
 import { PageTitulo } from "../components/Titulo";
@@ -49,7 +47,7 @@ export function Dashboard() {
                 if (data === posts) return;
                 let Revdata = data.reverse();
                 setPosts(Revdata);
-        
+
             })
             .catch(error => console.error(error));
     }

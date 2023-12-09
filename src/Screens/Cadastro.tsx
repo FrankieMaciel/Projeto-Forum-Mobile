@@ -6,9 +6,7 @@ import { formStyles } from '../styles/form';
 import { ArrowLeft } from 'react-native-feather';
 import * as Token from '../utils/token';
 import * as UserData from '../utils/userData';
-
-import axios from 'axios';
-import host from './host';
+import { getForumApi } from '../utils/forumApi';
 
 export default function Cadastro() {
 
@@ -27,7 +25,8 @@ export default function Cadastro() {
     };
 
     const fetchData = async () => {
-      await axios.post(`http://${host}:3000/users`, dataToSend)
+      const forumApi = await getForumApi();
+      await forumApi.post('/users', dataToSend)
         .then(async (response) => {
           const data = response.data;
           console.log('Dados recebidos:', data);

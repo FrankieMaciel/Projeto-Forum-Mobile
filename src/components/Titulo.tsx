@@ -50,12 +50,12 @@ export function HomeTitulo() {
                 <Text style={headerStyles.text}>Fórum</Text>
             </Pressable>
             <TouchableOpacity onPress={GoSearch}>
-            <Search
-                stroke={vars.mainText}
-                fill="#00000000"
-                width={20}
-                height={20}
-                style={headerStyles.icon}
+                <Search
+                    stroke={vars.mainText}
+                    fill="#00000000"
+                    width={20}
+                    height={20}
+                    style={headerStyles.icon}
                 />
             </TouchableOpacity>
         </View>
@@ -71,7 +71,7 @@ export function PageTitulo() {
     function Profile() {
         navigation.navigate('Profile');
     }
-    
+
     function GoSearch() {
         navigation.navigate('Search');
     }
@@ -87,13 +87,13 @@ export function PageTitulo() {
             >
                 <Text style={headerStyles.text}>Fórum</Text>
             </Pressable>
-            <TouchableOpacity onPress={GoSearch}>
-            <Search
-                stroke={vars.mainText}
-                fill="#00000000"
-                width={20}
-                height={20}
-                style={headerStyles.icon}
+            <TouchableOpacity onPress={GoSearch} style={headerStyles.searchButton} >
+                <Search
+                    stroke={vars.mainText}
+                    fill="#00000000"
+                    width={25}
+                    height={25}
+                    style={headerStyles.icon}
                 />
             </TouchableOpacity>
         </View>

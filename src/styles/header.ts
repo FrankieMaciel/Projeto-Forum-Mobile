@@ -40,9 +40,12 @@ export const headerStyles = StyleSheet.create({
     alignSelf: 'center',
     width: '100%',
   },
+  searchButton: {
+    marginHorizontal: 10,
+    paddingVertical: 20
+  },
   icon: {
     alignSelf: 'center',
-    marginHorizontal: 10,
     zIndex: 5,
   },
   circleIcon: {

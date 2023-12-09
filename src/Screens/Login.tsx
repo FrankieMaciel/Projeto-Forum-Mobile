@@ -1,5 +1,3 @@
-import axios from 'axios';
-import host from './host';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +5,7 @@ import { Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
 import * as Token from '../utils/token';
 import * as UserData from '../utils/userData'
+import { getForumApi } from '../utils/forumApi';
 
 export default function Login() {
 
@@ -23,7 +22,8 @@ export default function Login() {
     };
 
     const fetchData = async () => {
-      await axios.post(`http://${host}:3000/users/login/`, dataToSend)
+      const forumApi = await getForumApi()
+      await forumApi.post('/users/login/', dataToSend)
         .then((response) => {
           const data = response.data;
           if (data.token) {
@@ -33,7 +33,7 @@ export default function Login() {
               id: data.id,
               username: data.username,
               email: data.email,
-              profileURL: data.pfpURL,
+              profileURL: data.profileURL,
               score: data.score
             })
             navigation.navigate('Dashboard');

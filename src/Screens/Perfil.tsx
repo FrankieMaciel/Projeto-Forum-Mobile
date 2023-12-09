@@ -40,7 +40,7 @@ export function Profile() {
   }
 
   return (
-    <View>
+    <View style={homeStyles.screen}>
       <Titulo></Titulo>
       <View style={homeStyles.containerView}>
         <View style={profileStyles.background}>
