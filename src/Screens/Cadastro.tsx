@@ -37,7 +37,7 @@ export default function Cadastro() {
               id: data.id,
               username: data.username,
               email: data.email,
-              profileURL: data.profileURL,
+              profileURL: data.pfpURL,
               score: 0
             })
             navigation.navigate('Dashboard');

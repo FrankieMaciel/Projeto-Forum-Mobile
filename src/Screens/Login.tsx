@@ -33,7 +33,7 @@ export default function Login() {
               id: data.id,
               username: data.username,
               email: data.email,
-              profileURL: data.profileURL,
+              profileURL: data.pfpURL,
               score: data.score
             })
             navigation.navigate('Dashboard');
@@ -46,8 +46,8 @@ export default function Login() {
     };
     await fetchData()
       .then(async () => {
-        console.log(await Token._retrieveData());
-        console.log(await UserData._retrieveData());
+        await Token._retrieveData();
+        await UserData._retrieveData();
       });
   };
 

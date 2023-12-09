@@ -7,15 +7,26 @@ import { CriarPostagem } from "../components/CardPostagem";
 import { User, CardProps, PostCard } from "../components/Post";
 import { homeStyles } from "../styles/home";
 import { pageStyles } from "../styles/pageInitial";
-import * as Token from "../utils/token";
+import { getForumApi } from "../utils/forumApi";
 
+const user: User = { id: '', name: '', profileURL: '' }
+const Card: CardProps = { user, title: '', content: '', date: new Date() }
+
+interface Card {
+    user: {
+        id: string,
+        name: string,
+        profileURL: string
+    },
+    title: string,
+    content: string,
+    date: Date
+};
 
 export function Dashboard() {
     const [refreshing, setRefreshing] = useState(false);
-    const user: User = { id: '', name: '', profileURL: '' }
-    const card: CardProps = { user, title: '', content: '', date: new Date() }
     const [criarPostagemActive, setCriarPostagemActive] = useState(false);
-    const [posts, setPosts] = useState([card]);
+    const [posts, setPosts] = useState<Card[]>([]);
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true);
@@ -29,21 +40,18 @@ export function Dashboard() {
     }
 
     const getPosts = async () => {
-        await axios.get(`http://${host}:3000/posts`, await Token._getHeader())
+        const forumApi = await getForumApi();
+        await forumApi.get(`/posts`)
             .then((response): void => {
                 const data: CardProps[] | undefined = response.data;
-                console.log(data);
 
-                if (data && data.length !== 0) {
-                    if (data !== posts) {
-                        setPosts([]);
-                        setPosts(data);
-                        console.log('\n//=------------------------------------------------=//\nPosts: ', posts);
-                    }
-                } else {
-                    setPosts([]);
-                }
-            }).catch(error => console.error(error));
+                if (!data) return;
+                if (data === posts) return;
+                let Revdata = data.reverse();
+                setPosts(Revdata);
+        
+            })
+            .catch(error => console.error(error));
     }
 
     useEffect(() => {

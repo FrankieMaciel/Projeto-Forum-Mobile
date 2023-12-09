@@ -6,6 +6,7 @@ import { X } from 'react-native-feather';
 import { CardStyle } from "../styles/card";
 import * as Token from "../utils/token";
 import * as UserData from "../utils/userData";
+import { getForumApi } from "../utils/forumApi";
 
 interface Props {
     closeFunc: () => void;
@@ -20,6 +21,7 @@ export function CriarPostagem(props: Props) {
 
     const handleCreatePost = async () => {
         const user = await UserData._retrieveData();
+        console.log(user);
         const dataToSend = {
             user: {
                 id: user.id,
@@ -31,7 +33,8 @@ export function CriarPostagem(props: Props) {
         }
 
         const fetchData = async () => {
-            await axios.post(`http://${host}:3000/posts`, dataToSend, await Token._getHeader())
+            const forumApi = await getForumApi();
+            await forumApi.post(`/posts`, dataToSend)
                 .then(async response => {
                     const data = response.data;
                     console.log('Dados recebidos: ', data);

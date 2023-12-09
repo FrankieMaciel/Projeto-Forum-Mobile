@@ -1,2 +1,2 @@
-const host = '192.168.0.106';
+const host = '192.168.42.239';
 export default host;
