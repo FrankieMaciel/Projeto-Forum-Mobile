@@ -6,6 +6,7 @@ import { formStyles } from '../styles/form';
 import { ArrowLeft } from 'react-native-feather';
 import * as Token from '../utils/token';
 import * as UserData from '../utils/userData';
+import axios from 'axios';
 import { getForumApi } from '../utils/forumApi';
 
 export default function Cadastro() {

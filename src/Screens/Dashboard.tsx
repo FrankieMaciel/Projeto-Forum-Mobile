@@ -5,6 +5,7 @@ import { CriarPostagem } from "../components/CardPostagem";
 import { User, CardProps, PostCard } from "../components/Post";
 import { homeStyles } from "../styles/home";
 import { pageStyles } from "../styles/pageInitial";
+import axios from 'axios';
 import { getForumApi } from "../utils/forumApi";
 
 const user: User = { id: '', name: '', profileURL: '' }
@@ -42,7 +43,6 @@ export function Dashboard() {
         await forumApi.get(`/posts`)
             .then((response): void => {
                 const data: CardProps[] | undefined = response.data;
-
                 if (!data) return;
                 if (data === posts) return;
                 let Revdata = data.reverse();

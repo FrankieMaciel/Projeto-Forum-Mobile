@@ -1,7 +1,7 @@
 import axios from "axios";
 import { _getHeader, _retrieveData } from "./token";
 
-const host = '192.168.0.106';
+const host = '192.168.0.255';
 
 const forumApi = axios.create({
   baseURL: `http://${host}:3000`,
