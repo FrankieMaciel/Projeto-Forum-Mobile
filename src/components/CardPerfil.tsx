@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { X } from 'react-native-feather';
 import { CardStyle } from "../styles/card";
@@ -6,31 +6,40 @@ import * as Token from "../utils/token";
 import * as UserData from "../utils/userData";
 import { getForumApi } from "../utils/forumApi";
 
+interface Location {
+    lat: string;
+    lng: string;
+}
+
+interface User {
+    name: string,
+    profileURL: string;
+    location?: Location
+}
+
 interface Props {
+    user: User;
     closeFunc: () => void;
     closeUseState: () => boolean;
 }
 
-export function CriarPostagem(props: Props) {
+export function EditarPerfil(props: Props) {
 
-    const [inputTitulo, setInputTitulo] = useState('');
-    const [inputTexto, setInputTexto] = useState('');
+    const [username, setUsername] = useState('');
+    const [pfPicture, setPfPicture] = useState('');
+    const [location, setLocation] = useState<Location>()
     const maxInputTexto = 500;
 
-    const { closeFunc } = props;
+    const { closeFunc, user } = props;
     let { closeUseState } = props
 
     const handleCreatePost = async () => {
         const user = await UserData._retrieveData();
         console.log(user);
         const dataToSend = {
-            user: {
-                id: user.id,
-                name: user.username,
-                profileURL: user.profileURL
-            },
-            title: inputTitulo,
-            content: inputTexto,
+            username,
+            profileURL: pfPicture,
+            location
         }
         console.log(dataToSend);
 
@@ -65,20 +74,17 @@ export function CriarPostagem(props: Props) {
                     />
                 </TouchableOpacity>
                 <View style={CardStyle.inputView}>
-                    <TextInput style={CardStyle.inputTitulo}
+                    <TextInput
+                        // style={CardStyle.input}
                         placeholder="Título"
                         maxLength={50}
-                        onChangeText={setInputTitulo}
+                        onChangeText={setUsername}
                     ></TextInput>
 
                     <TextInput
-                        style={CardStyle.inputTexto}
-                        multiline={true}
-                        numberOfLines={20}
-                        maxLength={maxInputTexto}
-                        onChangeText={setInputTexto}
+                        // style={CardStyle.input}
+                        onChangeText={setPfPicture}
                     ></TextInput>
-                    <Text style={CardStyle.textCount}>{inputTexto.length}/{maxInputTexto}</Text>
 
                     <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleCreatePost}>
                         <Text style={CardStyle.botaoText}>Criar Postagem</Text>

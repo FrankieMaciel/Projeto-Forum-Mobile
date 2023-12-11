@@ -13,7 +13,7 @@ export const CardStyle = StyleSheet.create({
     },
     containerView: {
         display: 'flex',
-        backgroundColor: vars.bg2,
+        backgroundColor: vars.bg,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 20,
@@ -23,7 +23,7 @@ export const CardStyle = StyleSheet.create({
         top: '30%',
     },
     inputView: {
-        width: '90%',
+        width: '100%',
     },
     inputTitulo: {
         backgroundColor: vars.bgWhite,
@@ -61,7 +61,9 @@ export const CardStyle = StyleSheet.create({
         marginHorizontal: '25%'
     },
     fechar: {
-        left: 150,
+        backgroundColor: vars.bg,
+        borderRadius: 5,
+        left: 130,
         marginBottom: 20,
     }
 })

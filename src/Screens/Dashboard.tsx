@@ -7,10 +7,6 @@ import { homeStyles } from "../styles/home";
 import { pageStyles } from "../styles/pageInitial";
 import axios from 'axios';
 import { getForumApi } from "../utils/forumApi";
-
-const user: User = { id: '', name: '', profileURL: '' }
-const Card: CardProps = { user, title: '', content: '', date: new Date() }
-
 interface Card {
     user: {
         id: string,
@@ -34,13 +30,13 @@ export function Dashboard() {
     }, []);
 
     const showCriarPostagem = async () => {
-        if (criarPostagemActive) await getPosts();
         setCriarPostagemActive(!criarPostagemActive);
+        if (criarPostagemActive) getPosts();
     }
 
     const getPosts = async () => {
         const forumApi = await getForumApi();
-        await forumApi.get(`/posts`)
+        await forumApi.get('/posts')
             .then((response): void => {
                 const data: CardProps[] | undefined = response.data;
                 if (!data) return;
@@ -52,6 +48,10 @@ export function Dashboard() {
             .catch(error => console.error(error));
     }
 
+    function getCriarPostagemActive(): boolean {
+        return criarPostagemActive;
+    }
+
     useEffect(() => {
         getPosts();
     }, []);
@@ -59,7 +59,7 @@ export function Dashboard() {
     return (
         <View style={homeStyles.screen}>
             <PageTitulo></PageTitulo>
-            {criarPostagemActive ? <CriarPostagem closeFunc={showCriarPostagem} /> : null}
+            {criarPostagemActive ? <CriarPostagem closeFunc={showCriarPostagem} closeUseState={getCriarPostagemActive} /> : null}
             <ScrollView contentContainerStyle={{ flexGrow: 1, minHeight: '100%' }}
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -67,8 +67,9 @@ export function Dashboard() {
                 <View style={homeStyles.containerView}>
 
                     <View>
-                        <TouchableOpacity style={pageStyles.cardComponent} onPress={showCriarPostagem}>
-                            <Text style={pageStyles.button}>Criar Postagem</Text>
+                        <TouchableOpacity style={pageStyles.button} onPress={showCriarPostagem}
+                        disabled={criarPostagemActive}>
+                            <Text style={pageStyles.text}>Criar Postagem</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={homeStyles.postListView}>

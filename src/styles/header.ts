@@ -5,12 +5,14 @@ export const headerStyles = StyleSheet.create({
   header: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: vars.bg2,
+    backgroundColor: vars.bg,
+    borderBottomColor: vars.mainOutline,
+    borderBottomWidth: vars.mainBorderWidth,
     justifyContent: 'space-between',
     width: '100%',
     height: 100,
     paddingTop: 30,
-    top: 0
+    top: 0,
   },
   DarkHeader: {
     display: 'flex',
@@ -25,7 +27,7 @@ export const headerStyles = StyleSheet.create({
   HeaderEmpty: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: vars.bg2,
+    backgroundColor: vars.bg,
     justifyContent: 'center',
     width: '100%',
     height: 100,

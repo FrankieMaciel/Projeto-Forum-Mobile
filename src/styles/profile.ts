@@ -39,7 +39,7 @@ export const profileStyles = StyleSheet.create({
     marginTop: 10
   },
   optionsBtn: {
-    backgroundColor: vars.bgWhite,
+    backgroundColor: vars.mainButton,
     borderRadius: 10,
     paddingVertical: 5,
     paddingHorizontal: 10

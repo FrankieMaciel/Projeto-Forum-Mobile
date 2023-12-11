@@ -13,6 +13,7 @@ import Login from "./src/Screens/Login";
 import { Dashboard } from './src/Screens/Dashboard';
 import { Profile } from './src/Screens/Perfil';
 import { SearchScreen } from './src/Screens/Search';
+import { Comments } from './src/Screens/Comments';
 
 const stack = createStackNavigator();
 
@@ -31,6 +32,11 @@ export default function App() {
         {/* <stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} /> */}
         <stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
         <stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
+        <stack.Screen name="Comments" component={Comments} options={{ 
+          headerShown: false, 
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          }} />
       </stack.Navigator>
     </NavigationContainer>
   );

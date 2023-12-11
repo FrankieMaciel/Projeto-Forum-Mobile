@@ -3,18 +3,16 @@ import vars from "./root";
 
 export const pageStyles = StyleSheet.create({
     button: {
-        backgroundColor: 'white',
-        borderRadius: 50,
+        backgroundColor: vars.mainButton,
+        borderRadius: 10,
         width: 150,
         padding: 10,
         marginTop: 30,
         marginBottom: 10,
-        textAlign: 'center',
         position: 'absolute',
-        right: 40,
+        right: 10,
     },
-    cardComponent: {
-        marginLeft: '9%'
+    text: {
+        textAlign: 'center',
     }
-
 })

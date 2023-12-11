@@ -7,6 +7,7 @@ export declare global {
       PageInitial: { numero: number } | undefined;
       Profile: { numero: number } | undefined;
       Search: { numero: number } | undefined;
+      Comments: { numero: number } | undefined;
     }
   }
 }

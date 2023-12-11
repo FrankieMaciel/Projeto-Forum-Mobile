@@ -1,16 +1,17 @@
 const vars = {
-  bg: "#171a30",
-  bg2: "#232a55",
-  bg3: "#3e477F",
+  bg: "#000105",
+  mainOutline: "#21222a",
   bgLight: "#f1f2f8",
   bgWhite: "#fff",
   danger: "#b00",
   mainText: "#fff",
   textLight: "#babcd6",
   innerText: "#000",
-  mainFontSize: 15,
-  fontSizeTitle: 30,
   gray: "#BCBCBC",
   softGray: "#E0E0E0",
+  mainButton: "#65CBE0",
+  mainFontSize: 15,
+  fontSizeTitle: 30,
+  mainBorderWidth: 1
 };
 export default vars;

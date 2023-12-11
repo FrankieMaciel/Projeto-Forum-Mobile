@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { postStyles } from "../styles/post";
 import { useNavigation } from "@react-navigation/native";
 
@@ -15,9 +15,7 @@ export interface CardProps {
   date: Date
 }
 
-export function PostCard({ user, title, content, date }: CardProps) {
-
-  const navigation = useNavigation();
+export function PostCardComment({ user, title, content, date }: CardProps) {
 
   let day: number | string = date.getDate(),
     mon: number | string = date.getMonth() + 1;
@@ -27,10 +25,6 @@ export function PostCard({ user, title, content, date }: CardProps) {
 
   if (day < 10) day = '0' + day;
   if (mon < 10) mon = '0' + mon;
-
-  function handleComments(): void {
-    navigation.navigate('Comments');
-  }
 
   return (
     <View style={postStyles.containerView}>
@@ -43,13 +37,13 @@ export function PostCard({ user, title, content, date }: CardProps) {
       </View>
       <View style={postStyles.textBG}>
         <Text style={postStyles.postTitle}>{title}</Text>
-        <Text style={postStyles.postContent}>{content}</Text>
+        <Text>{content}</Text>
       </View>
-      <View>
-        <Pressable style={(state) => [postStyles.commentsBtn, state.pressed && postStyles.btnPressed]} onPress={handleComments}>
+      {/* <View>
+        <TouchableOpacity style={postStyles.commentsBtn} onPress={handleComments}>
           <Text style={postStyles.commentsText}>Comentários</Text>
-        </Pressable>
-      </View>
+        </TouchableOpacity>
+      </View> */}
     </View>
   )
 }
