@@ -29,12 +29,14 @@ export const headerStyles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: vars.bg,
     justifyContent: 'center',
+    borderBottomColor: vars.mainOutline,
+    borderBottomWidth: vars.mainBorderWidth,
     width: '100%',
     height: 100,
     paddingTop: 30
   },
   text: {
-    position: 'absolute',
+    // position: 'absolute',
     color: vars.mainText,
     textAlign: 'center',
     fontSize: 30,
@@ -42,8 +44,17 @@ export const headerStyles = StyleSheet.create({
     alignSelf: 'center',
     width: '100%',
   },
+  profileTitle: {
+    position: 'absolute',
+    color: vars.mainText,
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+    width: '100%',
+    left: '75%'
+  },
   searchButton: {
-    marginHorizontal: 10,
+    marginHorizontal: '5%',
     paddingVertical: 20
   },
   icon: {
@@ -58,7 +69,7 @@ export const headerStyles = StyleSheet.create({
     zIndex: 5
   },
   forumPress: {
-    width: 120,
+    width: '40%',
     height: 50,
     justifyContent: "center",
     alignItems: "center",
@@ -66,6 +77,10 @@ export const headerStyles = StyleSheet.create({
   },
   btnProfile: {
     alignSelf: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: '5%',
+  },
+  logout: {
+    marginRight: '5%',
+    paddingTop: 25
   }
 })

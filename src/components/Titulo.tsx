@@ -1,8 +1,7 @@
 import { View, Text, Pressable, TouchableOpacity } from 'react-native';
 import vars from '../styles/root';
-import { Search, Menu } from 'react-native-feather';
+import { Search, Menu, LogOut } from 'react-native-feather';
 import { useNavigation } from "@react-navigation/native";
-import { func } from 'prop-types';
 import { headerStyles } from '../styles/header';
 
 export function Titulo() {
@@ -17,46 +16,38 @@ export function Titulo() {
                 style={headerStyles.forumPress}
                 onPress={handlePress}
             >
-                <Text style={headerStyles.text}>Fórum</Text>
+                <Text style={headerStyles.text}>TechForum</Text>
             </Pressable>
         </View>
     )
 }
 
-export function HomeTitulo() {
+interface PerfilProps {
+    logout: () => void
+}
+
+export function PerfilTitulo({ logout }: PerfilProps) {
     const navigation = useNavigation();
 
     function handlePress() {
         navigation.navigate('Dashboard');
     }
 
-    function GoSearch() {
-        navigation.navigate('Search');
-    }
-
     return (
         <View style={headerStyles.header}>
-            <Menu
-                stroke={vars.mainText}
-                fill="#00000000"
-                width={20}
-                height={20}
-                style={headerStyles.icon}
-            />
             <Pressable
                 style={headerStyles.forumPress}
                 onPress={handlePress}
             >
-                <Text style={headerStyles.text}>Fórum</Text>
+                <Text style={headerStyles.profileTitle}>TechForum</Text>
             </Pressable>
-            <TouchableOpacity onPress={GoSearch}>
-                <Search
-                    stroke={vars.mainText}
-                    fill="#00000000"
-                    width={20}
-                    height={20}
-                    style={headerStyles.icon}
-                />
+            <TouchableOpacity style={headerStyles.logout} onPress={logout}>
+                <LogOut
+                    stroke={"#fff"}
+                    fill={"#00000000"}
+                    width={25}
+                    height={25}
+                ></LogOut>
             </TouchableOpacity>
         </View>
     )
@@ -85,7 +76,7 @@ export function PageTitulo() {
                 style={headerStyles.forumPress}
                 onPress={handlePress}
             >
-                <Text style={headerStyles.text}>Fórum</Text>
+                <Text style={headerStyles.text}>TechForum</Text>
             </Pressable>
             <TouchableOpacity onPress={GoSearch} style={headerStyles.searchButton} >
                 <Search
@@ -114,8 +105,16 @@ export function SearchTitle() {
                 style={headerStyles.forumPress}
                 onPress={handlePress}
             >
-                <Text style={headerStyles.text}>Fórum</Text>
+                <Text style={headerStyles.text}>TechForum</Text>
             </Pressable>
+        </View>
+    )
+}
+
+export function LoginTitulo() {
+    return (
+        <View style={headerStyles.HeaderEmpty}>
+            <Text style={headerStyles.text}>TechForum</Text>
         </View>
     )
 }

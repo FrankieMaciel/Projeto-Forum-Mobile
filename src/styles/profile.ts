@@ -4,26 +4,29 @@ import vars from "./root";
 export const profileStyles = StyleSheet.create({
   background: {
     display: 'flex',
-    gap: 10,
-    alignItems: 'center',
-    backgroundColor: vars.bg2,
-    borderRadius: 20,
+    flexDirection: 'row',
+    gap: 20,
+    // alignItems: 'center',
+    backgroundColor: vars.bg,
+    // borderRadius: 20,
     width: '91%',
-    margin: 20,
-    padding: 10
+    margin: '5%',
+    paddingBottom: '5%',
+    borderBottomColor: vars.mainOutline,
+    borderBottomWidth: vars.mainBorderWidth
   },
   picture: {
     backgroundColor: 'white',
-    borderRadius: 40,
-    width: 200,
-    height: 200
+    borderRadius: 20,
+    width: 100,
+    height: 100
   },
   info: {
     justifyContent: 'space-between'
   },
   name: {
     color: vars.mainText,
-    textAlign: 'center',
+    // textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 25
   },

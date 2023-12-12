@@ -31,12 +31,16 @@ export default function App() {
         <stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         {/* <stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} /> */}
         <stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
-        <stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
-        <stack.Screen name="Comments" component={Comments} options={{ 
-          headerShown: false, 
+        <stack.Screen name="Search" component={SearchScreen} options={{
+          headerShown: false,
           gestureEnabled: true,
           gestureDirection: 'horizontal',
-          }} />
+        }} />
+        <stack.Screen name="Comments" component={Comments} options={{
+          headerShown: false,
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+        }} />
       </stack.Navigator>
     </NavigationContainer>
   );

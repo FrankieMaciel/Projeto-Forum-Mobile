@@ -5,15 +5,16 @@ export const postStyles = StyleSheet.create({
   containerView: {
     display: 'flex',
     backgroundColor: vars.bg,
-    borderColor: vars.mainOutline,
-    borderWidth: vars.mainBorderWidth,
+    borderBottomColor: vars.mainOutline,
+    borderBottomWidth: vars.mainBorderWidth,
     // minHeight: '22%',
     // width: '95%',
     marginTop: 20,
-    borderRadius: 10,
+    // borderRadius: 10,
     // justifyContent: 'center',
     // alignItems: 'center',
-    padding: 20,
+    paddingVertical: '5%',
+    paddingHorizontal: '2%'
   },
   postHeader: {
     display: 'flex',
@@ -29,42 +30,51 @@ export const postStyles = StyleSheet.create({
   date: {
     color: vars.textLight,
   },
-  textBG: {
-    backgroundColor: vars.bg,
-    borderColor: vars.mainText,
-    borderWidth: vars.mainBorderWidth,
-    borderRadius: 10,
-    padding: 10,
-    marginTop: 20,
-  },
   icon: {
     width: 40,
     height: 40,
     backgroundColor: vars.bgWhite,
+    borderColor: vars.mainButton,
+    borderWidth: vars.mainBorderWidth,
     borderRadius: 100,
+  },
+  textBG: {
+    backgroundColor: vars.bg,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingBottom: 20,
+    marginTop: '2.5%',
   },
   postTitle: {
     color: vars.mainText,
     fontWeight: 'bold',
-    marginBottom: 10,
+    // borderBottomColor: vars.mainText,
+    // borderBottomWidth: vars.mainBorderWidth,
+    paddingBottom: 2,
+    marginBottom: 1,
     fontSize: 20,
   },
   postContent: {
     color: vars.mainText
   },
   commentsBtn: {
-      borderColor: vars.mainButton,
-      borderWidth: vars.mainBorderWidth,
-      borderRadius: 5,
-      width: '35%',
-      marginTop: 10,
-      padding: 3,
+    borderColor: vars.mainButton,
+    borderWidth: vars.mainBorderWidth,
+    borderRadius: 5,
+    width: '35%',
+    marginTop: 10,
+    padding: 3,
+    alignSelf: 'flex-end'
   },
   btnPressed: {
-      backgroundColor: vars.mainButton,
+    backgroundColor: vars.mainButton,
   },
   commentsText: {
     color: vars.mainText,
     textAlign: 'center',
+  },
+  commentScreen: {
+    backgroundColor: vars.bg,
+    height: '100%'
   }
 })

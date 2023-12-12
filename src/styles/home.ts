@@ -11,7 +11,7 @@ export const homeStyles = StyleSheet.create({
     // backgroundColor: vars.bg,
     alignItems: 'center',
     height: '100%',
-    paddingHorizontal: '5%',
+    paddingHorizontal: '2%',
     marginBottom: 50
   },
   searchContainerView: {

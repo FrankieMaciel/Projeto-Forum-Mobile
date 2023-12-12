@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Titulo } from '../components/Titulo';
+import { LoginTitulo, Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
 import * as Token from '../utils/token';
 import * as UserData from '../utils/userData'
 import { getForumApi } from '../utils/forumApi';
+import vars from '../styles/root';
 
 export default function Login() {
 
@@ -20,6 +21,7 @@ export default function Login() {
       email: emailText,
       password: passwordText
     };
+    console.log(dataToSend);
 
     const fetchData = async () => {
       const forumApi = await getForumApi()
@@ -74,17 +76,31 @@ export default function Login() {
 
   return (
     <View style={formStyles.containerView}>
-      <Titulo></Titulo>
+      <LoginTitulo></LoginTitulo>
 
       <View style={formStyles.cardView}>
         <View style={formStyles.cardTitle}>
           <Text style={formStyles.title}>Entrar na conta</Text>
           <Text style={formStyles.subtitle}>Entre em sua conta abaixo</Text>
         </View>
-        <Text style={formStyles.label}>Email</Text>
-        <TextInput onChangeText={getEmail} style={formStyles.input} inputMode='email' keyboardType='email-address' autoCapitalize='none' autoCorrect={false} />
-        <Text style={formStyles.label}>Senha</Text>
-        <TextInput onChangeText={getPassword} style={formStyles.input} secureTextEntry />
+        <TextInput
+          onChangeText={getEmail}
+          style={formStyles.input}
+          inputMode='email'
+          keyboardType='email-address'
+          autoCapitalize='none'
+          autoCorrect={false}
+          placeholder='Email'
+          placeholderTextColor={vars.textLight}
+        />
+
+        <TextInput
+          onChangeText={getPassword}
+          style={formStyles.input}
+          placeholder='Senha'
+          placeholderTextColor={vars.textLight}
+          secureTextEntry
+        />
         <TouchableOpacity style={formStyles.button} onPress={handleLogin}>
           <Text style={formStyles.bntText}>Entrar</Text>
         </TouchableOpacity>

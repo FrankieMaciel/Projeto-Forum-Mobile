@@ -11,11 +11,13 @@ export const searchStyles = StyleSheet.create({
     color: "#fff",
   },
   input: {
+    color: vars.mainText,
     height: 40,
     width: "auto",
-    backgroundColor: vars.bgWhite,
+    borderBottomColor: vars.mainText,
+    borderBottomWidth: vars.mainBorderWidth,
     marginHorizontal: "10%",
-    borderRadius: 50,
+    // borderRadius: 50,
     marginTop: 20,
     padding: 10,
     paddingRight: 50,
@@ -24,7 +26,7 @@ export const searchStyles = StyleSheet.create({
     width: "100%",
     height: 130,
     marginTop: 30,
-    backgroundColor: vars.bg2,
+    backgroundColor: vars.bg,
     justifyContent: "space-between"
   },
   sillyButtons: {
@@ -37,7 +39,7 @@ export const searchStyles = StyleSheet.create({
     margin: 20,
   },
   button: {
-    backgroundColor: vars.bgWhite,
+    backgroundColor: vars.mainButton,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 13,

@@ -27,23 +27,25 @@ export function PostCardComment({ user, title, content, date }: CardProps) {
   if (mon < 10) mon = '0' + mon;
 
   return (
-    <View style={postStyles.containerView}>
-      <View style={postStyles.postHeader}>
-        <View style={postStyles.icon}></View>
-        <View>
-          <Text style={postStyles.headerTitle}>{user.name}</Text>
-          <Text style={postStyles.date}>{day}/{mon}/{yer} às {hrs}:{min}</Text>
+    <View style={postStyles.commentScreen}>
+      <View style={postStyles.containerView}>
+        <View style={postStyles.postHeader}>
+          <View style={postStyles.icon}></View>
+          <View>
+            <Text style={postStyles.headerTitle}>{user.name}</Text>
+            <Text style={postStyles.date}>{day}/{mon}/{yer} às {hrs}:{min}</Text>
+          </View>
         </View>
-      </View>
-      <View style={postStyles.textBG}>
-        <Text style={postStyles.postTitle}>{title}</Text>
-        <Text>{content}</Text>
-      </View>
-      {/* <View>
+        <View style={postStyles.textBG}>
+          <Text style={postStyles.postTitle}>{title}</Text>
+          <Text style={postStyles.postContent}>{content}</Text>
+        </View>
+        {/* <View>
         <TouchableOpacity style={postStyles.commentsBtn} onPress={handleComments}>
           <Text style={postStyles.commentsText}>Comentários</Text>
         </TouchableOpacity>
       </View> */}
+      </View>
     </View>
   )
 }

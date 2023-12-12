@@ -1,6 +1,6 @@
 const vars = {
-  bg: "#000105",
-  mainOutline: "#21222a",
+  bg: "#202128",
+  mainOutline: "#41424a",
   bgLight: "#f1f2f8",
   bgWhite: "#fff",
   danger: "#b00",

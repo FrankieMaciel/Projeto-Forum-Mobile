@@ -5,6 +5,7 @@ import { CardStyle } from "../styles/card";
 import * as Token from "../utils/token";
 import * as UserData from "../utils/userData";
 import { getForumApi } from "../utils/forumApi";
+import vars from "../styles/root";
 
 interface Props {
     closeFunc: () => void;
@@ -69,6 +70,7 @@ export function CriarPostagem(props: Props) {
                         placeholder="Título"
                         maxLength={50}
                         onChangeText={setInputTitulo}
+                        placeholderTextColor={vars.textLight}
                     ></TextInput>
 
                     <TextInput

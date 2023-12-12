@@ -10,7 +10,7 @@ export const pageStyles = StyleSheet.create({
         marginTop: 30,
         marginBottom: 10,
         position: 'absolute',
-        right: 10,
+        left: 25,
     },
     text: {
         textAlign: 'center',

@@ -26,17 +26,16 @@ export const CardStyle = StyleSheet.create({
         width: '100%',
     },
     inputTitulo: {
-        backgroundColor: vars.bgWhite,
-        color: vars.innerText,
-        borderRadius: 10,
+        color: vars.mainText,
+        borderBottomColor: vars.mainText,
+        borderBottomWidth: vars.mainBorderWidth,
         paddingHorizontal: 15,
         fontSize: 20,
         marginBottom: 10,
         height: 40,
     },
     inputTexto: {
-        backgroundColor: vars.bgWhite,
-        color: vars.innerText,
+        color: vars.mainText,
         textAlignVertical: 'top',
         borderRadius: 10,
         padding: 10,
@@ -55,7 +54,7 @@ export const CardStyle = StyleSheet.create({
         textAlign: 'center'
     },
     botaoCriar: {
-        backgroundColor: vars.bgWhite,
+        backgroundColor: vars.mainButton,
         borderRadius: 30,
         padding: 10,
         marginHorizontal: '25%'

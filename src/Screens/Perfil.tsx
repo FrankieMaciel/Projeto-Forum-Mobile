@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Pressable, TouchableOpacity } from "react-native";
-import { Titulo } from "../components/Titulo";
+import { PerfilTitulo, Titulo } from "../components/Titulo";
 import { PostCard } from "../components/Post";
 import { homeStyles } from "../styles/home";
 import { profileStyles } from "../styles/profile";
@@ -36,7 +36,7 @@ export function Profile() {
     console.log('Usuário deslogado');
     navigation.navigate('Login');
   }
-  
+
   async function uploadImageProfile() {
     if (!profileImage) return;
     const formData = new FormData();
@@ -49,15 +49,15 @@ export function Profile() {
 
     const forumApi = await getForumApi();
     await forumApi.post('/user/edit', formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      }
-    })
-    .then((response): void => {
-      
-    })
-    .catch(error => console.error(error));
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      })
+      .then((response): void => {
+
+      })
+      .catch(error => console.error(error));
   }
 
   const handleChoosePhoto = async () => {
@@ -83,7 +83,7 @@ export function Profile() {
 
   return (
     <View style={homeStyles.screen}>
-      <Titulo></Titulo>
+      <PerfilTitulo logout={Logout} ></PerfilTitulo>
       <View style={homeStyles.containerView}>
         <View style={profileStyles.background}>
           <View style={profileStyles.picture}></View>
@@ -101,12 +101,12 @@ export function Profile() {
             </View>
           </View>
         </View>
-              <TouchableOpacity onPress={handleChoosePhoto}>
+        {/* <TouchableOpacity onPress={handleChoosePhoto}>
                 <Text style={profileStyles.btnText}>Escolher foto</Text>
               </TouchableOpacity>
               <Pressable style={profileStyles.optionsBtn} onPress={uploadImageProfile}>
                 <Text style={profileStyles.btnText}>Fazer upload</Text>
-              </Pressable>
+              </Pressable> */}
         <Pressable style={[profileStyles.optionsBtn, profileStyles.seePostsBtn]} onPress={VerPostagens}>
           <Text style={[profileStyles.btnText, profileStyles.seePostsBtnText]}>Ver postagens</Text>
         </Pressable>

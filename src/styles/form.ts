@@ -8,7 +8,7 @@ export const formStyles = StyleSheet.create({
     alignItems: 'center',
   },
   cardView: {
-    backgroundColor: vars.bg2,
+    backgroundColor: vars.bg,
     borderRadius: 10,
     width: 370,
     marginTop: 100,
@@ -35,9 +35,12 @@ export const formStyles = StyleSheet.create({
     marginBottom: 5
   },
   input: {
-    backgroundColor: 'white',
-    color: 'black',
-    borderRadius: 50,
+    // backgroundColor: 'white',
+    color: vars.mainText,
+    // borderRadius: 50,
+    borderBottomColor: vars.mainText,
+    borderBottomWidth: vars.mainBorderWidth,
+    marginTop: '5%',
     paddingVertical: 5,
     paddingHorizontal: 15,
     fontSize: 20,
@@ -53,12 +56,12 @@ export const formStyles = StyleSheet.create({
     textAlign: 'center',
   },
   changeFormLink: {
-    color: '#7df',
+    color: vars.mainButton,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
   },
   button: {
-    backgroundColor: vars.bgWhite,
+    backgroundColor: vars.mainButton,
     borderRadius: 50,
     width: 150,
     padding: 10,
@@ -84,5 +87,10 @@ export const formStyles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 18
+  },
+  passwordsDifferent: {
+    color: vars.danger,
+    paddingLeft: 15,
+    marginTop: 10
   }
 })

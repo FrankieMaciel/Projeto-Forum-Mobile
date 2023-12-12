@@ -8,16 +8,24 @@ import * as Token from '../utils/token';
 import * as UserData from '../utils/userData';
 import axios from 'axios';
 import { getForumApi } from '../utils/forumApi';
+import vars from '../styles/root';
 
 export default function Cadastro() {
 
   const [emailText, setEmailText] = useState('');
   const [usernameText, setUsernameText] = useState('');
   const [passwordText, setPasswordText] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+  const [passwordsDifferent, setPasswordsDifferent] = useState(false)
 
   const navigation = useNavigation();
 
   const handleCadastro = async () => {
+    if (passwordText !== repeatPassword) {
+      setPasswordsDifferent(true);
+      return;
+    }
+    setPasswordsDifferent(false);
 
     const dataToSend = {
       username: usernameText,
@@ -66,6 +74,10 @@ export default function Cadastro() {
     setPasswordText(passwordText);
   }
 
+  function getRepeatPassword(repeatPassword: string) {
+    setRepeatPassword(repeatPassword)
+  }
+
   return (
     <View style={formStyles.containerView}>
       <Titulo></Titulo>
@@ -82,17 +94,42 @@ export default function Cadastro() {
           <Text style={formStyles.subtitle}>Crie sua conta abaixo</Text>
         </View>
 
-        <Text style={formStyles.label}>Nome</Text>
-        <TextInput onChangeText={getUsername} style={formStyles.input} />
+        <TextInput
+          onChangeText={getUsername}
+          style={formStyles.input}
+          placeholder='Nome'
+          placeholderTextColor={vars.textLight}
+        />
 
-        <Text style={formStyles.label}>Email</Text>
-        <TextInput onChangeText={getEmail} style={formStyles.input} inputMode='email' keyboardType='email-address' autoCapitalize='none' autoCorrect={false} />
+        <TextInput
+          onChangeText={getEmail}
+          style={formStyles.input}
+          inputMode='email'
+          keyboardType='email-address'
+          autoCapitalize='none'
+          autoCorrect={false}
+          placeholder='Email'
+          placeholderTextColor={vars.textLight}
+        />
 
-        <Text style={formStyles.label}>Senha</Text>
-        <TextInput onChangeText={getPassword} style={formStyles.input} secureTextEntry />
+        <TextInput
+          onChangeText={getPassword}
+          style={formStyles.input}
+          placeholder='Senha'
+          placeholderTextColor={vars.textLight}
+          secureTextEntry
+        />
 
-        <Text style={formStyles.label}>Repetir senha</Text>
-        <TextInput style={formStyles.input} secureTextEntry />
+        <TextInput
+          onChangeText={getRepeatPassword}
+          style={formStyles.input}
+          placeholder='Repetir senha'
+          placeholderTextColor={vars.textLight}
+          secureTextEntry
+        />
+        <Text style={formStyles.passwordsDifferent}>
+          {passwordsDifferent ? '* As senhas não são iguais!' : ''}
+        </Text>
 
         <Pressable style={formStyles.button} onPress={handleCadastro}>
           <Text style={formStyles.bntText}>Cadastrar</Text>
