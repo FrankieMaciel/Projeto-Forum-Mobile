@@ -17,25 +17,20 @@ interface Props {
     user: User | undefined;
     closeFunc: () => void;
     closeUseState: () => boolean;
-    changeUser: (image: any) => void;
+    changeUser: () => void;
 }
 
 export function EditarPerfil(props: Props) {
 
-    const [profileImage, setprofileImage] = useState<String>();
-
-    async function uploadImageProfile() {
-        console.log(props.user);
-        if (!profileImage) return;
+    async function uploadImageProfile(imageURI: string) {
         if (!props.user) return;
         const formData = new FormData();
         formData.append('pf-picture',
         {
         type:'image/jpg',
         name:`${props.user.id}.jpg`,
-        uri:profileImage,
+        uri:imageURI,
         } as any);
-    
         const forumApi = await getForumApi();
         await forumApi.post('/users/profilePicture/' + props.user.id, formData,
         {
@@ -43,24 +38,28 @@ export function EditarPerfil(props: Props) {
             'Content-Type': 'multipart/form-data',
         }
         })
-        .then((response): void => {
-            console.log(response);
-            props.changeUser(response.data.image);
+        .then(() => {
+            props.changeUser();
+            console.log('Mudando...');
         })
         .catch(error => console.error(error));
     }
 
     const handleChoosePhoto = async () => {
-    let _image = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        });
-        console.log(_image);
-        if (!_image.canceled) {
-            setprofileImage(_image.assets[0].uri);
+
+        let {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status != 'granted') {
+            alert("Precisamos de permissão para acessar as imagens!");
+            return;
         }
 
-        uploadImageProfile();
+        let _image = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+        });
+        if (!_image.canceled) { 
+            await uploadImageProfile(_image.assets[0].uri);
+        }
     };
 
     const { 

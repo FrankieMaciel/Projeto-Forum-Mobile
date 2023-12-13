@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Pressable, TouchableOpacity, Image } from "react-native";
+import { View, Text, Pressable, TouchableOpacity } from "react-native";
 import { PerfilTitulo, Titulo } from "../components/Titulo";
 import { homeStyles } from "../styles/home";
 import { profileStyles } from "../styles/profile";
@@ -8,11 +8,11 @@ import * as UserData from "../utils/userData";
 import * as Token from "../utils/token"
 import { EditarPerfil } from "../components/CardPerfil";
 import { User } from "../@types/objects";
-import { getForumApi } from "../utils/forumApi";
+import { getForumApi, host } from "../utils/forumApi";
+import { Image } from 'expo-image';
 
 export function Profile() {
   const [user, setUser] = useState<User>();
-  const [profileImgeBlob, setprofileImgeBlob] = useState<string | null>(null);
   const [editProfileOpen, setEditProfileOpen] = useState(false);
   
   const GetProfileInfo = async () => {
@@ -26,24 +26,15 @@ export function Profile() {
       score: userInfo.score,
     }
 
-    const forumApi = await getForumApi();
-    const response = await forumApi.get(
-      '/users/profilePicture/' + user.id
-      , {responseType: 'blob'})
-
-      
-    setprofileImgeBlob(response.data);
-      
-    console.log(profileImgeBlob);
+    if (user.id == undefined) user.id = "undefined";
+    user.profileImage = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
+    console.log(user);
     setUser(user);
   }
 
-  function setProfileImge(image: any) {
-    if (!image) return;
-    if (!user) return;
-    let newUser = user;
-    newUser.profileImage = image;
-    setUser(newUser);
+  async function setProfileImge() {
+    Image.clearDiskCache();
+    Image.clearMemoryCache();
   }
 
   useEffect(() => {
@@ -83,6 +74,20 @@ export function Profile() {
       <View style={homeStyles.containerView}>
         <View style={profileStyles.background}>
           <View style={profileStyles.picture}>
+            {
+            user ?
+            <Image
+            source={user.profileImage}
+            contentFit="fill"
+            style={
+              {
+                "width": "100%",
+                "height": "100%",
+                borderRadius: 15,
+              }
+            }
+            /> : null
+          }
           </View>
           <View style={profileStyles.info}>
             <Text style={profileStyles.name}>{user?.name}</Text>
@@ -107,19 +112,6 @@ export function Profile() {
         <Pressable style={[profileStyles.optionsBtn, profileStyles.seePostsBtn]} onPress={VerPostagens}>
           <Text style={[profileStyles.btnText, profileStyles.seePostsBtnText]}>Ver postagens</Text>
         </Pressable>
-        {profileImgeBlob ? 
-        <Image
-            
-            resizeMode="cover"
-            style={
-              {
-                "width": "100%",
-                "height": "100%",
-                "backgroundColor": "red"
-            }
-            }
-          /> : null
-          }
         {/* <View style={profileStyles.posts}>
         <PostCard></PostCard>
       </View> */}

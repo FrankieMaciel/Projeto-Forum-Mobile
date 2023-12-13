@@ -3,6 +3,8 @@ import vars from '../styles/root';
 import { Search, Menu, LogOut } from 'react-native-feather';
 import { useNavigation } from "@react-navigation/native";
 import { headerStyles } from '../styles/header';
+import { host } from '../utils/forumApi';
+import { Image } from 'expo-image';
 
 export function Titulo() {
     const navigation = useNavigation();
@@ -52,7 +54,12 @@ export function PerfilTitulo({ logout }: PerfilProps) {
         </View>
     )
 };
-export function PageTitulo() {
+
+interface Props {
+    pfpIcon: string;
+}
+
+export function PageTitulo(props: Props) {
     const navigation = useNavigation();
 
     function handlePress() {
@@ -70,7 +77,18 @@ export function PageTitulo() {
     return (
         <View style={headerStyles.header}>
             <Pressable style={headerStyles.btnProfile} onPress={Profile}>
-                <View style={headerStyles.circleIcon} />
+            <Image
+            source={props.pfpIcon}
+            contentFit="fill"
+            style={
+                {
+                "width": 40,
+                "height": 40,
+                borderRadius: 5,
+                "backgroundColor": "red",
+                }
+            }
+            />
             </Pressable>
             <Pressable
                 style={headerStyles.forumPress}

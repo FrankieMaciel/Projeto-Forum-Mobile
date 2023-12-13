@@ -6,7 +6,10 @@ import { User, CardProps, PostCard } from "../components/Post";
 import { homeStyles } from "../styles/home";
 import { pageStyles } from "../styles/pageInitial";
 import axios from 'axios';
-import { getForumApi } from "../utils/forumApi";
+import { getForumApi, host } from "../utils/forumApi";
+import { User as myUser } from "../@types/objects";
+import * as UserData from "../utils/userData";
+import { Loader } from "react-native-feather";
 interface Card {
     user: {
         id: string,
@@ -22,10 +25,29 @@ export function Dashboard() {
     const [refreshing, setRefreshing] = useState(false);
     const [criarPostagemActive, setCriarPostagemActive] = useState(false);
     const [posts, setPosts] = useState<Card[]>([]);
+    const [user, setUser] = useState<myUser>();
+
+    const GetProfileInfo = async () => {
+        const userInfo = await UserData._retrieveData();
+    
+        let user: myUser = {
+            id: userInfo.id,
+            name: userInfo.username,
+            profileImage: null,
+            email: userInfo.email,
+            score: userInfo.score,
+        }
+    
+        if (user.id == undefined) user.id = "undefined";
+        user.profileImage = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
+
+        setUser(user);
+    }
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true);
         await getPosts();
+        GetProfileInfo();
         setRefreshing(false);
     }, []);
 
@@ -54,11 +76,12 @@ export function Dashboard() {
 
     useEffect(() => {
         getPosts();
+        GetProfileInfo();
     }, []);
 
     return (
         <View style={homeStyles.screen}>
-            <PageTitulo></PageTitulo>
+            <PageTitulo pfpIcon={user?.profileImage}></PageTitulo>
             {criarPostagemActive ? <CriarPostagem closeFunc={showCriarPostagem} closeUseState={getCriarPostagemActive} /> : null}
             <ScrollView contentContainerStyle={{ flexGrow: 1, minHeight: '100%' }}
                 refreshControl={
@@ -85,7 +108,12 @@ export function Dashboard() {
                             ))
                         ) : (
                             <View>
-                                <Text>{posts.length}</Text>
+                                <Loader
+                                    stroke={"#fff"}
+                                    fill={"#00000000"}
+                                    width={25}
+                                    height={25}
+                                ></Loader>
                             </View>
                         )}
                     </View>

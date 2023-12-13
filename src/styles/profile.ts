@@ -16,7 +16,6 @@ export const profileStyles = StyleSheet.create({
     borderBottomWidth: vars.mainBorderWidth
   },
   picture: {
-    backgroundColor: 'white',
     borderRadius: 20,
     width: 100,
     height: 100
