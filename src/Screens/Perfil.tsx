@@ -1,29 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, Pressable, TouchableOpacity, Image } from "react-native";
 import { PerfilTitulo, Titulo } from "../components/Titulo";
-import { PostCard } from "../components/Post";
 import { homeStyles } from "../styles/home";
 import { profileStyles } from "../styles/profile";
 import { useNavigation } from "@react-navigation/native";
 import * as UserData from "../utils/userData";
 import * as Token from "../utils/token"
+import { EditarPerfil } from "../components/CardPerfil";
+import { User } from "../@types/objects";
 import { getForumApi } from "../utils/forumApi";
-import * as ImagePicker from 'expo-image-picker';
 
 export function Profile() {
-  const [profileImage, setprofileImage] = useState<String>();
-  const [profileName, setProfileName] = useState('');
-  const [profileEmail, setProfileEmail] = useState('');
-  const [profileScore, setProfileScore] = useState(0);
+  const [user, setUser] = useState<User>();
+  const [profileImgeBlob, setprofileImgeBlob] = useState<string | null>(null);
   const [editProfileOpen, setEditProfileOpen] = useState(false);
-
+  
   const GetProfileInfo = async () => {
     const userInfo = await UserData._retrieveData();
-    console.log(userInfo);
 
-    setProfileName(userInfo.username);
-    setProfileEmail(userInfo.email);
-    setProfileScore(userInfo.score);
+    let user: User = {
+      id: userInfo.id,
+      name: userInfo.username,
+      profileImage: null,
+      email: userInfo.email,
+      score: userInfo.score,
+    }
+
+    const forumApi = await getForumApi();
+    const response = await forumApi.get(
+      '/users/profilePicture/' + user.id
+      , {responseType: 'blob'})
+
+      
+    setprofileImgeBlob(response.data);
+      
+    console.log(profileImgeBlob);
+    setUser(user);
+  }
+
+  function setProfileImge(image: any) {
+    if (!image) return;
+    if (!user) return;
+    let newUser = user;
+    newUser.profileImage = image;
+    setUser(newUser);
   }
 
   useEffect(() => {
@@ -37,40 +57,6 @@ export function Profile() {
     navigation.navigate('Login');
   }
 
-  async function uploadImageProfile() {
-    if (!profileImage) return;
-    const formData = new FormData();
-    // formData.append('image',
-    //   {
-    //     type:'image/jpg',
-    //     name:'userProfile.jpg',
-    //     uri:profileImage,
-    //   });
-
-    const forumApi = await getForumApi();
-    await forumApi.post('/user/edit', formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        }
-      })
-      .then((response): void => {
-
-      })
-      .catch(error => console.error(error));
-  }
-
-  const handleChoosePhoto = async () => {
-    let _image = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-    });
-    console.log(_image);
-    if (!_image.canceled) {
-      setprofileImage(_image.assets[0].uri);
-    }
-  };
-
   const navigation = useNavigation();
 
   function VerPostagens() {
@@ -81,20 +67,31 @@ export function Profile() {
     setEditProfileOpen(!editProfileOpen);
   }
 
+  function getEditProfileOpen(): boolean {
+    return editProfileOpen;
+  }
+
   return (
     <View style={homeStyles.screen}>
+      {editProfileOpen ? <EditarPerfil 
+      user={user}
+      closeFunc={openEditModel}
+      closeUseState={getEditProfileOpen}
+      changeUser={setProfileImge}
+      /> : null}         
       <PerfilTitulo logout={Logout} ></PerfilTitulo>
       <View style={homeStyles.containerView}>
         <View style={profileStyles.background}>
-          <View style={profileStyles.picture}></View>
+          <View style={profileStyles.picture}>
+          </View>
           <View style={profileStyles.info}>
-            <Text style={profileStyles.name}>{profileName}</Text>
-            <Text style={profileStyles.infoText}>{profileEmail}</Text>
-            <Text style={profileStyles.infoText}>{profileScore} pontos</Text>
+            <Text style={profileStyles.name}>{user?.name}</Text>
+            <Text style={profileStyles.infoText}>{user?.email}</Text>
+            <Text style={profileStyles.infoText}>{user?.score} pontos</Text>
             <View style={profileStyles.options}>
-              <Pressable style={profileStyles.optionsBtn}>
+              <TouchableOpacity style={profileStyles.optionsBtn} onPress={openEditModel}>
                 <Text style={profileStyles.btnText}>Editar Perfil</Text>
-              </Pressable>
+              </TouchableOpacity>
               <Pressable style={[profileStyles.optionsBtn, profileStyles.deletePfBtn]}>
                 <Text style={[profileStyles.btnText, profileStyles.deleteBtnText]}>Deletar conta</Text>
               </Pressable>
@@ -110,6 +107,19 @@ export function Profile() {
         <Pressable style={[profileStyles.optionsBtn, profileStyles.seePostsBtn]} onPress={VerPostagens}>
           <Text style={[profileStyles.btnText, profileStyles.seePostsBtnText]}>Ver postagens</Text>
         </Pressable>
+        {profileImgeBlob ? 
+        <Image
+            
+            resizeMode="cover"
+            style={
+              {
+                "width": "100%",
+                "height": "100%",
+                "backgroundColor": "red"
+            }
+            }
+          /> : null
+          }
         {/* <View style={profileStyles.posts}>
         <PostCard></PostCard>
       </View> */}
