@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { X } from 'react-native-feather';
+import * as ImagePicker from 'expo-image-picker';
 import { CardStyle } from "../styles/card";
 import * as Token from "../utils/token";
 import * as UserData from "../utils/userData";
 import { getForumApi } from "../utils/forumApi";
 import { User } from "../@types/objects";
-import * as ImagePicker from 'expo-image-picker';
 
 interface Location {
     lat: string;
@@ -21,15 +21,16 @@ interface Props {
 }
 
 export function EditarPerfil(props: Props) {
+    const [newUsername, setNewUsername] = useState('');
+    const [newEmail, setNewEmail] = useState('');
 
     async function uploadImageProfile(imageURI: string) {
         if (!props.user) return;
         const formData = new FormData();
-        formData.append('pf-picture',
-        {
-        type:'image/jpg',
-        name:`${props.user.id}.jpg`,
-        uri:imageURI,
+        formData.append('pf-picture', {
+            type:'image/jpg',
+            name:`${props.user.id}.jpg`,
+            uri:imageURI,
         } as any);
         const forumApi = await getForumApi();
         await forumApi.post('/users/profilePicture/' + props.user.id, formData,
@@ -62,6 +63,18 @@ export function EditarPerfil(props: Props) {
         }
     };
 
+    const handleEditUser = async () => {
+        if (newUsername === user?.name && newEmail === user.email) return;
+        const forumApi = await getForumApi();
+        await forumApi.post(`/users/edit/${user?.id}`)
+        .then((response) => {
+            const data = response.data;
+            if (data) {
+                console.log(data);
+            }
+        }).catch(error => console.error(`Erro ao editar usuário: \n${error}`));
+    }
+
     const { 
     closeFunc,
     user,
@@ -82,12 +95,23 @@ export function EditarPerfil(props: Props) {
                     />
                 </TouchableOpacity>
                 <View style={CardStyle.inputView}>
+                    <TextInput
+                        style={CardStyle.input}
+                        onChangeText={setNewUsername}
+                        editable={true}
+                    >{user?.name}</TextInput>
 
-                <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleChoosePhoto}>
+                    <TextInput
+                        style={CardStyle.input}
+                        onChangeText={setNewEmail}
+                        editable={true}
+                    >{user?.email}</TextInput>
+
+                    <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleChoosePhoto}>
                         <Text style={CardStyle.botaoText}>Mudar foto</Text>
                     </TouchableOpacity>
                     
-                    <TouchableOpacity style={CardStyle.botaoCriar}>
+                    <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleEditUser}>
                         <Text style={CardStyle.botaoText}>Editar</Text>
                     </TouchableOpacity>
                 </View>

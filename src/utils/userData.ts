@@ -11,6 +11,7 @@ interface IUserData {
 const _retrieveData = async () => {
   try {
     const data = await AsyncStorage.getItem('@UserData:key');
+    console.log(`Retrieved: ${data}`);
     if (data !== null) return JSON.parse(data);
     console.log('Nenhum usuário encontrado.');
   } catch (error) {
@@ -21,6 +22,7 @@ const _retrieveData = async () => {
 const _storeData = async (data: IUserData) => {
   try {
     await AsyncStorage.setItem('@UserData:key', JSON.stringify(data));
+    console.log(`Stored: ${data}`);
   } catch (error) {
     console.error('Erro ao armazenar dados do usuário: ', error);
   }

@@ -40,6 +40,7 @@ export default function Cadastro() {
           const data = response.data;
           console.log('Dados recebidos:', data);
           if (data.token) {
+            console.log(data);
             await Token._storeData(data.token);
             await UserData._storeData({
               id: data.id,

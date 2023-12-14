@@ -79,6 +79,8 @@ export function CriarPostagem(props: Props) {
                         numberOfLines={20}
                         maxLength={maxInputTexto}
                         onChangeText={setInputTexto}
+                        placeholder="Escreva algo..."
+                        placeholderTextColor={vars.textLight}
                     ></TextInput>
                     <Text style={CardStyle.textCount}>{inputTexto.length}/{maxInputTexto}</Text>
 

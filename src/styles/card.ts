@@ -25,6 +25,15 @@ export const CardStyle = StyleSheet.create({
     inputView: {
         width: '100%',
     },
+    input: {
+        color: vars.mainText,
+        borderBottomColor: vars.mainText,
+        borderBottomWidth: vars.mainBorderWidth,
+        paddingHorizontal: 15,
+        fontSize: 20,
+        marginBottom: 10,
+        height: 40,
+    },
     inputTitulo: {
         color: vars.mainText,
         borderBottomColor: vars.mainText,

@@ -25,10 +25,10 @@ export function SearchScreen() {
         </View>
         <View style={searchStyles.sillyButtons}>
           <TouchableOpacity style={searchStyles.button}>
-            <Text>Todos</Text>
+            <Text>Pessoas</Text>
           </TouchableOpacity>
           <TouchableOpacity style={searchStyles.button}>
-            <Text>Pessoas</Text>
+            <Text>Meus posts</Text>
           </TouchableOpacity>
           <TouchableOpacity style={searchStyles.button}>
             <Text>Posts</Text>

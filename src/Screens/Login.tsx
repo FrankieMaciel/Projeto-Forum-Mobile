@@ -29,7 +29,7 @@ export default function Login() {
         .then((response) => {
           const data = response.data;
           if (data.token) {
-            // console.log('Dados recebidos:', data);
+            console.log('Dados recebidos:', data);
             Token._storeData(data.token);
             UserData._storeData({
               id: data.id,
