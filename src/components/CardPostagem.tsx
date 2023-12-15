@@ -19,7 +19,7 @@ export function CriarPostagem(props: Props) {
     const maxInputTexto = 500;
 
     const { closeFunc } = props;
-    let { closeUseState } = props
+    let { closeUseState } = props;
 
     const handleCreatePost = async () => {
         const user = await UserData._retrieveData();

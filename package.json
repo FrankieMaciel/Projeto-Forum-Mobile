@@ -23,7 +23,9 @@
     "react-native-feather": "^1.1.2",
     "react-native-image-picker": "^7.1.0",
     "react-native-navigation": "^7.37.1",
-    "react-router-dom": "^6.17.0"
+    "react-router-dom": "^6.17.0",
+    "react-native-maps": "1.7.1",
+    "expo-location": "~16.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

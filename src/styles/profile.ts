@@ -13,7 +13,7 @@ export const profileStyles = StyleSheet.create({
     margin: '5%',
     paddingBottom: '5%',
     borderBottomColor: vars.mainOutline,
-    borderBottomWidth: vars.mainBorderWidth
+    borderBottomWidth: vars.mainBorderWidth,
   },
   picture: {
     borderRadius: 20,
@@ -41,22 +41,58 @@ export const profileStyles = StyleSheet.create({
     marginTop: 10
   },
   optionsBtn: {
-    backgroundColor: vars.mainButton,
+    backgroundColor: vars.bg,
     borderRadius: 10,
     paddingVertical: 5,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
+    width: '90%',
+    height: '8%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    fontSize: 20,
+    borderWidth: 1,
+    borderColor: vars.innerText,
   },
-  btnText: {},
+  btnText: {
+    fontSize: 15,
+    color: vars.mainText,
+  },
   deletePfBtn: {
-    backgroundColor: vars.danger
+    backgroundColor: vars.bg,
+    marginTop: 20,
+    borderColor: vars.danger,
   },
   deleteBtnText: {
-    color: vars.mainText
+    color: vars.danger,
   },
   seePostsBtn: {
 
   },
-  seePostsBtnText: {
-    fontSize: 20
-  }
+  mapView: {
+    width: '100%',
+    height: '80%',
+    borderWidth: 1,
+    borderColor: vars.innerText,
+    marginBottom: 10,
+  },
+  mapCard: {
+    display: 'flex',
+    backgroundColor: vars.bg,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    padding: 20,
+    width: '90%',
+    marginHorizontal: 22.5,
+    top: '10%',
+    height: '80%',
+  },
+  map: {
+    width: '100%',
+    // NÃO TIRAR ESSA LINHA PELO AMOR DE DEUS
+    ...StyleSheet.absoluteFillObject,
+    marginBottom: 10,
+    height: '100%',
+  },
 })

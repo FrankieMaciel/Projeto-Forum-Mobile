@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, Pressable, TouchableOpacity, ScrollView } from "react-native";
 import { PerfilTitulo, Titulo } from "../components/Titulo";
 import { homeStyles } from "../styles/home";
 import { profileStyles } from "../styles/profile";
@@ -10,9 +10,13 @@ import { EditarPerfil } from "../components/CardPerfil";
 import { User } from "../@types/objects";
 import { getForumApi, host } from "../utils/forumApi";
 import { Image } from 'expo-image';
+import MapView from "react-native-maps";
+import { LocationObject, getCurrentPositionAsync, requestForegroundPermissionsAsync } from "expo-location";
+import { CardMapa } from "../components/CardMapa";
 
 export function Profile() {
   const [user, setUser] = useState<User>();
+  const [editLocalizationOpen, setLocalizationOpen] = useState(false);
   const [editProfileOpen, setEditProfileOpen] = useState(false);
   
   const GetProfileInfo = async () => {
@@ -28,7 +32,7 @@ export function Profile() {
 
     if (user.id == undefined) user.id = "undefined";
     user.profileImage = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
-    console.log(user);
+    // console.log(user);
     setUser(user);
   }
 
@@ -58,8 +62,16 @@ export function Profile() {
     setEditProfileOpen(!editProfileOpen);
   }
 
+  function openLocalizationModel() {
+    setLocalizationOpen(!editLocalizationOpen);
+  }
+
   function getEditProfileOpen(): boolean {
     return editProfileOpen;
+  }
+
+  function getLocalizationOpen(): boolean {
+    return editLocalizationOpen;
   }
 
   return (
@@ -69,7 +81,11 @@ export function Profile() {
       closeFunc={openEditModel}
       closeUseState={getEditProfileOpen}
       changeUser={setProfileImge}
-      /> : null}         
+      /> : null}
+      {editLocalizationOpen ? <CardMapa
+        closeFunc={openLocalizationModel}
+        closeUseState={getLocalizationOpen}
+      /> : null}        
       <PerfilTitulo logout={Logout} ></PerfilTitulo>
       <View style={homeStyles.containerView}>
         <View style={profileStyles.background}>
@@ -94,27 +110,22 @@ export function Profile() {
             <Text style={profileStyles.infoText}>{user?.email}</Text>
             <Text style={profileStyles.infoText}>{user?.score} pontos</Text>
             <View style={profileStyles.options}>
-              <TouchableOpacity style={profileStyles.optionsBtn} onPress={openEditModel}>
-                <Text style={profileStyles.btnText}>Editar Perfil</Text>
-              </TouchableOpacity>
-              <Pressable style={[profileStyles.optionsBtn, profileStyles.deletePfBtn]}>
-                <Text style={[profileStyles.btnText, profileStyles.deleteBtnText]}>Deletar conta</Text>
-              </Pressable>
             </View>
           </View>
         </View>
-        {/* <TouchableOpacity onPress={handleChoosePhoto}>
-                <Text style={profileStyles.btnText}>Escolher foto</Text>
-              </TouchableOpacity>
-              <Pressable style={profileStyles.optionsBtn} onPress={uploadImageProfile}>
-                <Text style={profileStyles.btnText}>Fazer upload</Text>
-              </Pressable> */}
-        <Pressable style={[profileStyles.optionsBtn, profileStyles.seePostsBtn]} onPress={VerPostagens}>
-          <Text style={[profileStyles.btnText, profileStyles.seePostsBtnText]}>Ver postagens</Text>
-        </Pressable>
-        {/* <View style={profileStyles.posts}>
-        <PostCard></PostCard>
-      </View> */}
+          <TouchableOpacity style={[profileStyles.optionsBtn, profileStyles.seePostsBtn]} onPress={VerPostagens}>
+            <Text style={[profileStyles.btnText]}>Ver postagens</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={profileStyles.optionsBtn} onPress={openEditModel}>
+            <Text style={profileStyles.btnText}>Editar Perfil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={profileStyles.optionsBtn} onPress={openLocalizationModel}>
+            <Text style={profileStyles.btnText}>Adicionar Localização</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[profileStyles.optionsBtn, profileStyles.deletePfBtn]}>
+            <Text style={[profileStyles.btnText, profileStyles.deleteBtnText]}>Deletar conta</Text>
+          </TouchableOpacity>
       </View>
     </View>
   );
