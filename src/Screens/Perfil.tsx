@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Pressable, TouchableOpacity, ScrollView } from "react-native";
 import { PerfilTitulo, Titulo } from "../components/Titulo";
 import { homeStyles } from "../styles/home";
@@ -13,28 +13,31 @@ import { Image } from 'expo-image';
 import MapView from "react-native-maps";
 import { LocationObject, getCurrentPositionAsync, requestForegroundPermissionsAsync } from "expo-location";
 import { CardMapa } from "../components/CardMapa";
+import { UserContext } from "../contexts/user";
 
 export function Profile() {
-  const [user, setUser] = useState<User>();
+  const { user, setUser } = useContext(UserContext);
+
+  // const [user, setUser] = useState<User>();
   const [editLocalizationOpen, setLocalizationOpen] = useState(false);
   const [editProfileOpen, setEditProfileOpen] = useState(false);
-  
-  const GetProfileInfo = async () => {
-    const userInfo = await UserData._retrieveData();
 
-    let user: User = {
-      id: userInfo.id,
-      name: userInfo.username,
-      profileImage: null,
-      email: userInfo.email,
-      score: userInfo.score,
-    }
+  // const GetProfileInfo = async () => {
+  //   const userInfo = await UserData._retrieveData();
 
-    if (user.id == undefined) user.id = "undefined";
-    user.profileImage = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
-    // console.log(user);
-    setUser(user);
-  }
+  //   let user: User = {
+  //     id: userInfo.id,
+  //     name: userInfo.username,
+  //     profileURL: null,
+  //     email: userInfo.email,
+  //     score: userInfo.score,
+  //   }
+
+  //   if (user.id == undefined) user.id = "undefined";
+  //   user.profileURL = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
+  //   // console.log(user);
+  //   setUser(user);
+  // }
 
   async function setProfileImge() {
     Image.clearDiskCache();
@@ -42,7 +45,7 @@ export function Profile() {
   }
 
   useEffect(() => {
-    GetProfileInfo();
+    // GetProfileInfo();
   }, [])
 
   const Logout = async () => {
@@ -76,56 +79,56 @@ export function Profile() {
 
   return (
     <View style={homeStyles.screen}>
-      {editProfileOpen ? <EditarPerfil 
-      user={user}
-      closeFunc={openEditModel}
-      closeUseState={getEditProfileOpen}
-      changeUser={setProfileImge}
+      {editProfileOpen ? <EditarPerfil
+        user={user}
+        closeFunc={openEditModel}
+        closeUseState={getEditProfileOpen}
+        changeUser={setProfileImge}
       /> : null}
       {editLocalizationOpen ? <CardMapa
         closeFunc={openLocalizationModel}
         closeUseState={getLocalizationOpen}
-      /> : null}        
+      /> : null}
       <PerfilTitulo logout={Logout} ></PerfilTitulo>
       <View style={homeStyles.containerView}>
         <View style={profileStyles.background}>
           <View style={profileStyles.picture}>
             {
-            user ?
-            <Image
-            source={user.profileImage}
-            contentFit="fill"
-            style={
-              {
-                "width": "100%",
-                "height": "100%",
-                borderRadius: 15,
-              }
+              user ?
+                <Image
+                  source={user.profileURL}
+                  contentFit="fill"
+                  style={
+                    {
+                      "width": "100%",
+                      "height": "100%",
+                      borderRadius: 15,
+                    }
+                  }
+                /> : null
             }
-            /> : null
-          }
           </View>
           <View style={profileStyles.info}>
-            <Text style={profileStyles.name}>{user?.name}</Text>
+            <Text style={profileStyles.name}>{user?.username}</Text>
             <Text style={profileStyles.infoText}>{user?.email}</Text>
             <Text style={profileStyles.infoText}>{user?.score} pontos</Text>
             <View style={profileStyles.options}>
             </View>
           </View>
         </View>
-          <TouchableOpacity style={[profileStyles.optionsBtn, profileStyles.seePostsBtn]} onPress={VerPostagens}>
-            <Text style={[profileStyles.btnText]}>Ver postagens</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={profileStyles.optionsBtn} onPress={openEditModel}>
-            <Text style={profileStyles.btnText}>Editar Perfil</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={profileStyles.optionsBtn} onPress={openLocalizationModel}>
-            <Text style={profileStyles.btnText}>Adicionar Localização</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={[profileStyles.optionsBtn, profileStyles.seePostsBtn]} onPress={VerPostagens}>
+          <Text style={[profileStyles.btnText]}>Ver postagens</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={profileStyles.optionsBtn} onPress={openEditModel}>
+          <Text style={profileStyles.btnText}>Editar Perfil</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={profileStyles.optionsBtn} onPress={openLocalizationModel}>
+          <Text style={profileStyles.btnText}>Adicionar Localização</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity style={[profileStyles.optionsBtn, profileStyles.deletePfBtn]}>
-            <Text style={[profileStyles.btnText, profileStyles.deleteBtnText]}>Deletar conta</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={[profileStyles.optionsBtn, profileStyles.deletePfBtn]}>
+          <Text style={[profileStyles.btnText, profileStyles.deleteBtnText]}>Deletar conta</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

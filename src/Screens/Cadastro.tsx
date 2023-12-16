@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, Pressable, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { Titulo } from '../components/Titulo';
@@ -9,14 +9,17 @@ import * as UserData from '../utils/userData';
 import axios from 'axios';
 import { getForumApi } from '../utils/forumApi';
 import vars from '../styles/root';
+import { UserContext } from '../contexts/user';
 
 export default function Cadastro() {
+
+  const { user, setUser } = useContext(UserContext);
 
   const [emailText, setEmailText] = useState('');
   const [usernameText, setUsernameText] = useState('');
   const [passwordText, setPasswordText] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-  const [passwordsDifferent, setPasswordsDifferent] = useState(false)
+  const [passwordsDifferent, setPasswordsDifferent] = useState(false);
 
   const navigation = useNavigation();
 
@@ -40,21 +43,24 @@ export default function Cadastro() {
           const data = response.data;
           console.log('Dados recebidos:', data);
           if (data.token) {
-            console.log(data);
             await Token._storeData(data.token);
-            await UserData._storeData({
+            const dataTreated = {
               id: data.id,
               username: data.username,
               email: data.email,
-              profileURL: data.pfpURL,
+              profileURL: data.profileURL,
               score: 0
-            })
+            };
+
+            await UserData._storeData(dataTreated);
+            setUser(dataTreated);
+            console.log(user);
             navigation.navigate('Dashboard');
           } else {
             let erroMessage = JSON.parse(data.error);
             console.log(erroMessage[0]);
           }
-        })
+        });
     };
     fetchData();
   };
@@ -76,7 +82,7 @@ export default function Cadastro() {
   }
 
   function getRepeatPassword(repeatPassword: string) {
-    setRepeatPassword(repeatPassword)
+    setRepeatPassword(repeatPassword);
   }
 
   return (

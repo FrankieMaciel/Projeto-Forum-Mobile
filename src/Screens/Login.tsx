@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LoginTitulo, Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
 import * as Token from '../utils/token';
-import * as UserData from '../utils/userData'
+import * as UserData from '../utils/userData';
 import { getForumApi } from '../utils/forumApi';
 import vars from '../styles/root';
+import { UserContext } from '../contexts/user';
 
 export default function Login() {
+
+  const { user, setUser } = useContext(UserContext);
 
   const [emailText, setEmailText] = useState('');
   const [passwordText, setPasswordText] = useState('');
@@ -24,27 +27,25 @@ export default function Login() {
     console.log(dataToSend);
 
     const fetchData = async () => {
-      const forumApi = await getForumApi()
+      const forumApi = await getForumApi();
       await forumApi.post('/users/login/', dataToSend)
         .then((response) => {
           const data = response.data;
           if (data.token) {
             console.log('Dados recebidos:', data);
             Token._storeData(data.token);
-            UserData._storeData({
-              id: data.id,
-              username: data.username,
-              email: data.email,
-              profileURL: data.profileURL,
-              score: data.score
-            })
+            const dataTreated = treatData(data);
+
+            UserData._storeData(dataTreated);
+            setUser(dataTreated);
+            console.log(user);
             navigation.navigate('Dashboard');
           } else {
             let erroMessage = JSON.parse(data.error);
             throw new Error(erroMessage[0]);
           }
         })
-        .catch(error => console.error('Erro ao receber informações do login: ', error))
+        .catch(error => console.error('Erro ao receber informações do login: ', error));
     };
     await fetchData()
       .then(async () => {
@@ -53,14 +54,29 @@ export default function Login() {
       });
   };
 
+  const treatData = (data: any) => {
+    return {
+      id: data.id,
+      username: data.username,
+      email: data.email,
+      profileURL: data.profileURL,
+      score: data.score
+    };
+  };
+
   const logUser = async () => {
+    console.log(user);
+
     const data = await UserData._retrieveData();
-    if (data) navigation.navigate('Dashboard');
-  }
+    if (data) {
+      setUser(treatData(data));
+      navigation.navigate('Dashboard');
+    }
+  };
 
   useEffect(() => {
     logUser();
-  }, [])
+  }, []);
 
   const Cadastrar = () => {
     navigation.navigate('Cadastrar');

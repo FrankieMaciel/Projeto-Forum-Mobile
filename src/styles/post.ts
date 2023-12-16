@@ -69,12 +69,40 @@ export const postStyles = StyleSheet.create({
   btnPressed: {
     backgroundColor: vars.mainButton,
   },
+
+  // Comments
+  commentScreen: {
+    backgroundColor: vars.bg,
+    height: '100%'
+  },
+  commentsPost: {
+    paddingHorizontal: '5%',
+  },
   commentsText: {
     color: vars.mainText,
     textAlign: 'center',
   },
-  commentScreen: {
-    backgroundColor: vars.bg,
-    height: '100%'
+  commentBtn: {
+    backgroundColor: vars.mainButton,
+    borderRadius: 10,
+    width: 150,
+    padding: 10,
+    marginTop: 30,
+    marginBottom: 10,
+    position: 'absolute',
+    right: 25,
+  },
+  commentBtnText: {
+    textAlign: 'center'
+  },
+  commentsContainer: {
+    marginTop: 80,
+    marginHorizontal: '5%'
+  },
+  noComments: {
+    color: vars.textLighter,
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: '5%'
   }
-})
+});

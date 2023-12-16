@@ -14,6 +14,8 @@ import { Dashboard } from './src/Screens/Dashboard';
 import { Profile } from './src/Screens/Perfil';
 import { SearchScreen } from './src/Screens/Search';
 import { Comments } from './src/Screens/Comments';
+import UserProvider from './src/contexts/user';
+import PostProvider from './src/contexts/post';
 
 const stack = createStackNavigator();
 
@@ -22,26 +24,30 @@ const stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <stack.Navigator
-        screenOptions={TransitionPresets.SlideFromRightIOS}
-        initialRouteName="Login"
-      >
-        <stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} />
-        <stack.Screen name="Cadastrar" component={Cadastro} options={{ headerShown: false, headerStyle: { backgroundColor: '#ffffff' } }} />
-        <stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-        {/* <stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} /> */}
-        <stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
-        <stack.Screen name="Search" component={SearchScreen} options={{
-          headerShown: false,
-          gestureEnabled: true,
-          gestureDirection: 'horizontal',
-        }} />
-        <stack.Screen name="Comments" component={Comments} options={{
-          headerShown: false,
-          gestureEnabled: true,
-          gestureDirection: 'horizontal',
-        }} />
-      </stack.Navigator>
+      <UserProvider>
+        <PostProvider>
+          <stack.Navigator
+            screenOptions={TransitionPresets.SlideFromRightIOS}
+            initialRouteName="Login"
+          >
+            <stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} />
+            <stack.Screen name="Cadastrar" component={Cadastro} options={{ headerShown: false, headerStyle: { backgroundColor: '#ffffff' } }} />
+            <stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            {/* <stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} /> */}
+            <stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+            <stack.Screen name="Search" component={SearchScreen} options={{
+              headerShown: false,
+              gestureEnabled: true,
+              gestureDirection: 'horizontal',
+            }} />
+            <stack.Screen name="Comments" component={Comments} options={{
+              headerShown: false,
+              gestureEnabled: true,
+              gestureDirection: 'horizontal',
+            }} />
+          </stack.Navigator>
+        </PostProvider>
+      </UserProvider>
     </NavigationContainer>
   );
 }

@@ -1,16 +1,13 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { postStyles } from "../styles/post";
-import { useNavigation } from "@react-navigation/native";
 import formatDate from "../utils/dateFormat";
-import { PostCardProps } from "../@types/objects";
+import { CommentCardProps } from "../@types/objects";
 
-export function PostCardComment({ user, title, content, date }: PostCardProps) {
-
+export function CommentCard({ user, content, date }: CommentCardProps) {
   const formattedDate = formatDate(date);
 
   return (
-
-    <View style={[postStyles.containerView, postStyles.commentsPost]}>
+    <View style={postStyles.containerView}>
       <View style={postStyles.postHeader}>
         <View style={postStyles.icon}></View>
         <View>
@@ -19,7 +16,6 @@ export function PostCardComment({ user, title, content, date }: PostCardProps) {
         </View>
       </View>
       <View style={postStyles.textBG}>
-        <Text style={postStyles.postTitle}>{title}</Text>
         <Text style={postStyles.postContent}>{content}</Text>
       </View>
     </View>

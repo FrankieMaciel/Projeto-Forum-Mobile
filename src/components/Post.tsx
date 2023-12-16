@@ -1,34 +1,20 @@
 import { View, Text, Pressable } from "react-native";
 import { postStyles } from "../styles/post";
 import { useNavigation } from "@react-navigation/native";
+import formatDate from "../utils/dateFormat";
+import { useContext } from "react";
+import { PostContext } from "../contexts/post";
+import { PostCardProps } from "../@types/objects";
 
-export interface User {
-  id: string;
-  name: string;
-  profileURL: string;
-}
-
-export interface CardProps {
-  user: User;
-  title: string;
-  content: string;
-  date: Date
-}
-
-export function PostCard({ user, title, content, date }: CardProps) {
+export function PostCard({ id, user, title, content, date }: PostCardProps) {
+  const { post, setPost } = useContext(PostContext);
 
   const navigation = useNavigation();
 
-  let day: number | string = date.getDate(),
-    mon: number | string = date.getMonth() + 1;
-  const yer = date.getFullYear(),
-    hrs = date.getHours(),
-    min = date.getMinutes();
-
-  if (day < 10) day = '0' + day;
-  if (mon < 10) mon = '0' + mon;
+  const formattedDate = formatDate(date);
 
   function handleComments(): void {
+    setPost({ id, user, title, content, date });
     navigation.navigate('Comments');
   }
 
@@ -38,7 +24,7 @@ export function PostCard({ user, title, content, date }: CardProps) {
         <View style={postStyles.icon}></View>
         <View>
           <Text style={postStyles.headerTitle}>{user.name}</Text>
-          <Text style={postStyles.date}>{day}/{mon}/{yer} às {hrs}:{min}</Text>
+          <Text style={postStyles.date}>{formattedDate}</Text>
         </View>
       </View>
       <View style={postStyles.textBG}>
@@ -51,5 +37,5 @@ export function PostCard({ user, title, content, date }: CardProps) {
         </Pressable>
       </View>
     </View>
-  )
+  );
 }

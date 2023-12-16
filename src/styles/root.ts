@@ -6,6 +6,7 @@ const vars = {
   danger: "#b00",
   mainText: "#fff",
   textLight: "#babcd6",
+  textLighter: "#5a5c76",
   innerText: "#000",
   gray: "#BCBCBC",
   softGray: "#E0E0E0",

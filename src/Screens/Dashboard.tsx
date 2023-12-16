@@ -1,74 +1,80 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { ScrollView, View, Text, TouchableOpacity, RefreshControl } from "react-native";
 import { PageTitulo } from "../components/Titulo";
 import { CriarPostagem } from "../components/CardPostagem";
-import { User, CardProps, PostCard } from "../components/Post";
+import { PostCard } from "../components/Post";
 import { homeStyles } from "../styles/home";
 import { pageStyles } from "../styles/pageInitial";
 import axios from 'axios';
 import { getForumApi, host } from "../utils/forumApi";
-import { User as myUser } from "../@types/objects";
+import { PostCardProps, User } from "../@types/objects";
 import * as UserData from "../utils/userData";
 import { Loader } from "react-native-feather";
-interface Card {
-    user: {
-        id: string,
-        name: string,
-        profileURL: string
-    },
-    title: string,
-    content: string,
-    date: Date
-};
+import { UserContext } from "../contexts/user";
 
 export function Dashboard() {
+    const { user } = useContext(UserContext);
+
     const [refreshing, setRefreshing] = useState(false);
     const [criarPostagemActive, setCriarPostagemActive] = useState(false);
-    const [posts, setPosts] = useState<Card[]>([]);
-    const [user, setUser] = useState<myUser>();
+    const [posts, setPosts] = useState<PostCardProps[]>([]);
+    // const [user, setUser] = useState<User>();
 
-    const GetProfileInfo = async () => {
-        const userInfo = await UserData._retrieveData();
-    
-        let user: myUser = {
-            id: userInfo.id,
-            name: userInfo.username,
-            profileImage: null,
-            email: userInfo.email,
-            score: userInfo.score,
-        }
-    
-        if (user.id == undefined) user.id = "undefined";
-        user.profileImage = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
+    // const GetProfileInfo = async () => {
+    //     const userInfo = await UserData._retrieveData();
 
-        setUser(user);
-    }
+    //     let user: User = {
+    //         id: userInfo.id,
+    //         username: userInfo.username,
+    //         profileURL: '',
+    //         email: userInfo.email,
+    //         score: userInfo.score,
+    //     }
+
+    //     if (user.id == undefined) user.id = "undefined";
+    //     user.profileURL = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
+
+    //     setUser(user);
+    // }
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true);
         await getPosts();
-        GetProfileInfo();
+        // GetProfileInfo();
         setRefreshing(false);
     }, []);
 
     const showCriarPostagem = async () => {
         setCriarPostagemActive(!criarPostagemActive);
-        if (criarPostagemActive) getPosts();
-    }
+        if (criarPostagemActive) onRefresh();
+    };
 
     const getPosts = async () => {
         const forumApi = await getForumApi();
         await forumApi.get('/posts')
             .then((response): void => {
-                const data: CardProps[] | undefined = response.data;
+                const data = response.data;
                 if (!data) return;
-                if (data === posts) return;
-                let Revdata = data.reverse();
-                setPosts(Revdata);
 
+                const dataTreated: PostCardProps[] = [];
+                for (let post of data) dataTreated.push({
+                    id: post._id,
+                    user: {
+                        id: post.user.id,
+                        name: post.user.name,
+                        profileURL: post.user.profileURL
+                    },
+                    title: post.title,
+                    content: post.content,
+                    date: new Date(post.date)
+                });
+                if (dataTreated === posts) return;
+
+                let Revdata = dataTreated.reverse();
+                setPosts(Revdata);
             })
             .catch(error => console.error(error));
-    }
+    };
 
     function getCriarPostagemActive(): boolean {
         return criarPostagemActive;
@@ -76,12 +82,12 @@ export function Dashboard() {
 
     useEffect(() => {
         getPosts();
-        GetProfileInfo();
+        // GetProfileInfo();
     }, []);
 
     return (
         <View style={homeStyles.screen}>
-            <PageTitulo pfpIcon={user?.profileImage}></PageTitulo>
+            <PageTitulo pfpIcon={user?.profileURL || ''}></PageTitulo>
             {criarPostagemActive ? <CriarPostagem closeFunc={showCriarPostagem} closeUseState={getCriarPostagemActive} /> : null}
             <ScrollView contentContainerStyle={{ flexGrow: 1, minHeight: '100%' }}
                 refreshControl={
@@ -91,7 +97,7 @@ export function Dashboard() {
 
                     <View>
                         <TouchableOpacity style={pageStyles.button} onPress={showCriarPostagem}
-                        disabled={criarPostagemActive}>
+                            disabled={criarPostagemActive}>
                             <Text style={pageStyles.text}>Criar Postagem</Text>
                         </TouchableOpacity>
                     </View>
@@ -100,6 +106,7 @@ export function Dashboard() {
                             posts.map(post => (
                                 <PostCard
                                     key={post.title}
+                                    id={post.id}
                                     user={post.user}
                                     title={post.title}
                                     content={post.content}

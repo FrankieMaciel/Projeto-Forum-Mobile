@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { X } from 'react-native-feather';
 import { CardStyle } from "../styles/card";
@@ -6,6 +6,7 @@ import * as Token from "../utils/token";
 import * as UserData from "../utils/userData";
 import { getForumApi } from "../utils/forumApi";
 import vars from "../styles/root";
+import { UserContext } from "../contexts/user";
 
 interface Props {
     closeFunc: () => void;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function CriarPostagem(props: Props) {
+    const { user } = useContext(UserContext);
 
     const [inputTitulo, setInputTitulo] = useState('');
     const [inputTexto, setInputTexto] = useState('');
@@ -22,17 +24,16 @@ export function CriarPostagem(props: Props) {
     let { closeUseState } = props;
 
     const handleCreatePost = async () => {
-        const user = await UserData._retrieveData();
         console.log(user);
         const dataToSend = {
             user: {
-                id: user.id,
-                name: user.username,
-                profileURL: user.profileURL
+                id: user?.id,
+                name: user?.username,
+                profileURL: user?.profileURL || ''
             },
             title: inputTitulo,
             content: inputTexto,
-        }
+        };
         console.log(dataToSend);
 
         const fetchData = async () => {
@@ -47,10 +48,10 @@ export function CriarPostagem(props: Props) {
                         console.log(erroMessage[0]);
                     };
                 }).catch(error => console.error(error));
-        }
+        };
         fetchData();
         closeFunc();
-    }
+    };
 
     return (
         <View style={CardStyle.screenView}>
@@ -90,5 +91,5 @@ export function CriarPostagem(props: Props) {
                 </View>
             </View>
         </View>
-    )
+    );
 }
