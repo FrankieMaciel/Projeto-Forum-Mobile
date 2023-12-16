@@ -7,49 +7,24 @@ import { useNavigation } from "@react-navigation/native";
 import * as UserData from "../utils/userData";
 import * as Token from "../utils/token"
 import { EditarPerfil } from "../components/CardPerfil";
-import { User } from "../@types/objects";
 import { getForumApi, host } from "../utils/forumApi";
 import { Image } from 'expo-image';
-import MapView from "react-native-maps";
-import { LocationObject, getCurrentPositionAsync, requestForegroundPermissionsAsync } from "expo-location";
 import { CardMapa } from "../components/CardMapa";
 import { UserContext } from "../contexts/user";
 
 export function Profile() {
   const { user, setUser } = useContext(UserContext);
 
-  // const [user, setUser] = useState<User>();
   const [editLocalizationOpen, setLocalizationOpen] = useState(false);
   const [editProfileOpen, setEditProfileOpen] = useState(false);
-
-  // const GetProfileInfo = async () => {
-  //   const userInfo = await UserData._retrieveData();
-
-  //   let user: User = {
-  //     id: userInfo.id,
-  //     name: userInfo.username,
-  //     profileURL: null,
-  //     email: userInfo.email,
-  //     score: userInfo.score,
-  //   }
-
-  //   if (user.id == undefined) user.id = "undefined";
-  //   user.profileURL = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
-  //   // console.log(user);
-  //   setUser(user);
-  // }
 
   async function setProfileImge() {
     Image.clearDiskCache();
     Image.clearMemoryCache();
   }
 
-  useEffect(() => {
-    // GetProfileInfo();
-  }, [])
-
   const Logout = async () => {
-    await UserData._deleteData();
+    // await UserData._deleteData();
     await Token._deleteData();
     console.log('Usuário deslogado');
     navigation.navigate('Login');
@@ -80,7 +55,6 @@ export function Profile() {
   return (
     <View style={homeStyles.screen}>
       {editProfileOpen ? <EditarPerfil
-        user={user}
         closeFunc={openEditModel}
         closeUseState={getEditProfileOpen}
         changeUser={setProfileImge}
@@ -96,7 +70,7 @@ export function Profile() {
             {
               user ?
                 <Image
-                  source={user.profileURL}
+                  source={`http://${host}:3000/public/custom-pfp/${user.id}.jpg`}
                   contentFit="fill"
                   style={
                     {

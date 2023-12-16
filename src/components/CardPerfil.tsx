@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { X } from 'react-native-feather';
 import * as ImagePicker from 'expo-image-picker';
 import { CardStyle } from "../styles/card";
-import * as Token from "../utils/token";
-import * as UserData from "../utils/userData";
 import { getForumApi } from "../utils/forumApi";
+import { UserContext } from "../contexts/user";
 import { User } from "../@types/objects";
 
 interface Location {
@@ -14,7 +13,6 @@ interface Location {
 }
 
 interface Props {
-    user: User | undefined;
     closeFunc: () => void;
     closeUseState: () => boolean;
     changeUser: () => void;
@@ -24,16 +22,17 @@ export function EditarPerfil(props: Props) {
     const [newUsername, setNewUsername] = useState('');
     const [newEmail, setNewEmail] = useState('');
 
+    const { user, setUser } = useContext(UserContext);
+
     async function uploadImageProfile(imageURI: string) {
-        if (!props.user) return;
         const formData = new FormData();
         formData.append('pf-picture', {
             type:'image/jpg',
-            name:`${props.user.id}.jpg`,
+            name:`${user.id}.jpg`,
             uri:imageURI,
         } as any);
         const forumApi = await getForumApi();
-        await forumApi.post('/users/profilePicture/' + props.user.id, formData,
+        await forumApi.post('/users/profilePicture/' + user.id, formData,
         {
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -41,7 +40,6 @@ export function EditarPerfil(props: Props) {
         })
         .then(() => {
             props.changeUser();
-            console.log('Mudando...');
         })
         .catch(error => console.error(error));
     }
@@ -64,20 +62,32 @@ export function EditarPerfil(props: Props) {
     };
 
     const handleEditUser = async () => {
-        if (newUsername === user?.name && newEmail === user.email) return;
+        if (newUsername === user?.username && newEmail === user.email) return;
+
+        const obj = {
+            username: newUsername,
+            email: newEmail,
+        }
         const forumApi = await getForumApi();
-        await forumApi.post(`/users/edit/${user?.id}`)
+        await forumApi.post(`/users/edit/${user?.id}`, obj)
         .then((response) => {
             const data = response.data;
             if (data) {
-                console.log(data);
+
+                let obj: User = {
+                    id: data._id,
+                    username: data.username,
+                    email: data.email,
+                    score: data.score
+                }
+
+                setUser(obj);
             }
         }).catch(error => console.error(`Erro ao editar usuário: \n${error}`));
     }
 
     const { 
     closeFunc,
-    user,
     closeUseState
     } = props;
 
@@ -99,7 +109,7 @@ export function EditarPerfil(props: Props) {
                         style={CardStyle.input}
                         onChangeText={setNewUsername}
                         editable={true}
-                    >{user?.name}</TextInput>
+                    >{user?.username}</TextInput>
 
                     <TextInput
                         style={CardStyle.input}

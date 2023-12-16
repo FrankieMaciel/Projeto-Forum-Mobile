@@ -6,6 +6,7 @@ export const searchStyles = StyleSheet.create({
     backgroundColor: vars.bg,
     height: '100%',
     alignItems: 'center',
+    flex: 1,
   },
   text: {
     color: "#fff",

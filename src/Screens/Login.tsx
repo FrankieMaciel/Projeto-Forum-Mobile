@@ -37,6 +37,7 @@ export default function Login() {
             const dataTreated = treatData(data);
 
             UserData._storeData(dataTreated);
+            console.log(dataTreated);
             setUser(dataTreated);
             console.log(user);
             navigation.navigate('Dashboard');

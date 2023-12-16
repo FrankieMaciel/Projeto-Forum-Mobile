@@ -18,29 +18,10 @@ export function Dashboard() {
     const [refreshing, setRefreshing] = useState(false);
     const [criarPostagemActive, setCriarPostagemActive] = useState(false);
     const [posts, setPosts] = useState<PostCardProps[]>([]);
-    // const [user, setUser] = useState<User>();
-
-    // const GetProfileInfo = async () => {
-    //     const userInfo = await UserData._retrieveData();
-
-    //     let user: User = {
-    //         id: userInfo.id,
-    //         username: userInfo.username,
-    //         profileURL: '',
-    //         email: userInfo.email,
-    //         score: userInfo.score,
-    //     }
-
-    //     if (user.id == undefined) user.id = "undefined";
-    //     user.profileURL = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
-
-    //     setUser(user);
-    // }
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true);
         await getPosts();
-        // GetProfileInfo();
         setRefreshing(false);
     }, []);
 
@@ -82,12 +63,11 @@ export function Dashboard() {
 
     useEffect(() => {
         getPosts();
-        // GetProfileInfo();
     }, []);
 
     return (
         <View style={homeStyles.screen}>
-            <PageTitulo pfpIcon={user?.profileURL || ''}></PageTitulo>
+            <PageTitulo pfpIcon={`http://${host}:3000/public/custom-pfp/${user.id}.jpg`}></PageTitulo>
             {criarPostagemActive ? <CriarPostagem closeFunc={showCriarPostagem} closeUseState={getCriarPostagemActive} /> : null}
             <ScrollView contentContainerStyle={{ flexGrow: 1, minHeight: '100%' }}
                 refreshControl={
