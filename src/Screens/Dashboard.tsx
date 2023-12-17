@@ -23,6 +23,7 @@ export function Dashboard() {
     const onRefresh = useCallback(async () => {
         setRefreshing(true);
         await getPosts();
+        await getProfilePic();
         setRefreshing(false);
     }, []);
 
@@ -81,8 +82,7 @@ export function Dashboard() {
     }
 
     useEffect(() => {
-        getPosts();
-        getProfilePic();
+        onRefresh();
     }, []);
 
     return (
@@ -111,6 +111,7 @@ export function Dashboard() {
                                     title={post.title}
                                     content={post.content}
                                     date={new Date(post.date)}
+                                    screen="dashboard"
                                 ></PostCard>
                             ))
                         ) : (

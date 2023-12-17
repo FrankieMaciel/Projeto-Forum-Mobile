@@ -51,8 +51,8 @@ export const profileStyles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     fontSize: 20,
-    borderWidth: 1,
-    borderColor: vars.innerText,
+    borderWidth: vars.mainBorderWidth,
+    borderColor: vars.mainOutline,
   },
   btnText: {
     fontSize: 15,
@@ -64,6 +64,7 @@ export const profileStyles = StyleSheet.create({
     borderColor: vars.danger,
   },
   deleteBtnText: {
+    fontWeight: 'bold',
     color: vars.danger,
   },
   seePostsBtn: {
@@ -95,4 +96,4 @@ export const profileStyles = StyleSheet.create({
     marginBottom: 10,
     height: '100%',
   },
-})
+});

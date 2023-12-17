@@ -36,3 +36,12 @@ export interface PostCardProps extends CardProps {
 export interface CommentCardProps extends CardProps {
   postId: string;
 }
+
+export interface ModalProps {
+  closeFunc: () => void;
+  closeUseState: () => boolean;
+}
+
+export interface ActionModalProps extends ModalProps {
+  objectId: string;
+}

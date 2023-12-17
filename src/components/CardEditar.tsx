@@ -1,43 +1,46 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { X } from 'react-native-feather';
 import { CardStyle } from "../styles/card";
 import { getForumApi } from "../utils/forumApi";
 import vars from "../styles/root";
 import { UserContext } from "../contexts/user";
-import { PostContext } from "../contexts/post";
-import { ModalProps } from "../@types/objects";
+import { ActionModalProps } from "../@types/objects";
 
-export function CriarComentario(props: ModalProps) {
+interface EditProps extends ActionModalProps {
+  type: "post" | "comment";
+}
+
+export function CardEditar(props: EditProps) {
   const { user } = useContext(UserContext);
-  const { post } = useContext(PostContext);
 
+  const [inputTitulo, setInputTitulo] = useState('');
   const [inputTexto, setInputTexto] = useState('');
   const maxInputTexto = 500;
 
-  const { closeFunc } = props;
+  const { type, objectId, closeFunc } = props;
   let { closeUseState } = props;
 
-  const handleCreatePost = async () => {
+  const handleEdit = async () => {
     const dataToSend = {
       user: {
-        id: user.id,
+        userID: user.id,
         name: user.username,
-        profileURL: user.profileURL || ''
+        profileURL: user.profileURL
       },
-      postId: post.id,
+      title: inputTitulo,
       content: inputTexto,
     };
 
     const fetchData = async () => {
-      const forumApi = await getForumApi();
-      await forumApi.post(`/comments`, dataToSend)
-        .then(async response => {
-          const data = response.data;
-          if (!data) {
-            let erroMessage = JSON.parse(data.error);
-          };
-        }).catch(error => console.error(error));
+      // const forumApi = await getForumApi();
+      // await forumApi.post(`/posts`, dataToSend)
+      //   .then(async response => {
+      //     const data = response.data;
+      //     if (!data) {
+      //       let erroMessage = JSON.parse(data.error);
+      //     };
+      //   }).catch(error => console.error(error));
     };
     fetchData();
     closeFunc();
@@ -57,6 +60,13 @@ export function CriarComentario(props: ModalProps) {
           />
         </TouchableOpacity>
         <View style={CardStyle.inputView}>
+          <TextInput style={CardStyle.inputTitulo}
+            placeholder="Título"
+            maxLength={50}
+            onChangeText={setInputTitulo}
+            placeholderTextColor={vars.textLight}
+          ></TextInput>
+
           <TextInput
             style={CardStyle.inputTexto}
             multiline={true}
@@ -68,8 +78,8 @@ export function CriarComentario(props: ModalProps) {
           ></TextInput>
           <Text style={CardStyle.textCount}>{inputTexto.length}/{maxInputTexto}</Text>
 
-          <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleCreatePost}>
-            <Text style={CardStyle.botaoText}>Enviar</Text>
+          <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleEdit}>
+            <Text style={CardStyle.botaoText}>Criar Postagem</Text>
           </TouchableOpacity>
         </View>
       </View>

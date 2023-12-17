@@ -7,13 +7,9 @@ import { useEffect, useState } from "react";
 import { LocationObject, getCurrentPositionAsync, requestForegroundPermissionsAsync } from "expo-location";
 import { getForumApi } from "../utils/forumApi";
 import * as UserData from "../utils/userData";
+import { ModalProps } from "../@types/objects";
 
-interface Props {
-  closeFunc: () => void;
-  closeUseState: () => boolean;
-}
-
-export function CardMapa(props: Props) {
+export function CardMapa(props: ModalProps) {
 
   const [location, setLocation] = useState<LocationObject | null>(null);
   const [selectedLocalization, setSelectedLocalization] = useState<any>(null);

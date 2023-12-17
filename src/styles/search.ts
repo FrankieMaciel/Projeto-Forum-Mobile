@@ -68,6 +68,7 @@ export const searchStyles = StyleSheet.create({
   },
   postListView: {
     marginTop: 10,
-    width: "100%"
+    width: "90%",
+    marginHorizontal: '5%'
   }
-})
+});

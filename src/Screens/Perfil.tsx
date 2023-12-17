@@ -11,12 +11,14 @@ import { getForumApi, host } from "../utils/forumApi";
 import { Image } from 'expo-image';
 import { CardMapa } from "../components/CardMapa";
 import { UserContext } from "../contexts/user";
+import { CardDeletar } from "../components/CardDeletar";
 
 export function Profile() {
   const { user, setUser } = useContext(UserContext);
   const [profileURL, setProfileURL] = useState<string | null>(null);
   const [editLocalizationOpen, setLocalizationOpen] = useState(false);
   const [editProfileOpen, setEditProfileOpen] = useState(false);
+  const [deleteProfileOpen, setDeleteProfileOpen] = useState(false);
 
   async function setProfileImge() {
     Image.clearDiskCache();
@@ -61,12 +63,20 @@ export function Profile() {
     setLocalizationOpen(!editLocalizationOpen);
   }
 
+  function openDeleteModal() {
+    setDeleteProfileOpen(!deleteProfileOpen);
+  }
+
   function getEditProfileOpen(): boolean {
     return editProfileOpen;
   }
 
   function getLocalizationOpen(): boolean {
     return editLocalizationOpen;
+  }
+
+  function getDeleteProfileOpen(): boolean {
+    return deleteProfileOpen;
   }
 
   useEffect(() => {
@@ -83,6 +93,12 @@ export function Profile() {
       {editLocalizationOpen ? <CardMapa
         closeFunc={openLocalizationModel}
         closeUseState={getLocalizationOpen}
+      /> : null}
+      {deleteProfileOpen ? <CardDeletar
+        type="user"
+        objectId={user.id}
+        closeFunc={openDeleteModal}
+        closeUseState={getDeleteProfileOpen}
       /> : null}
       <PerfilTitulo logout={Logout} ></PerfilTitulo>
       <View style={homeStyles.containerView}>
@@ -121,7 +137,10 @@ export function Profile() {
           <Text style={profileStyles.btnText}>Adicionar Localização</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[profileStyles.optionsBtn, profileStyles.deletePfBtn]}>
+        <TouchableOpacity
+          style={[profileStyles.optionsBtn, profileStyles.deletePfBtn]}
+          onPress={openDeleteModal}
+        >
           <Text style={[profileStyles.btnText, profileStyles.deleteBtnText]}>Deletar conta</Text>
         </TouchableOpacity>
       </View>

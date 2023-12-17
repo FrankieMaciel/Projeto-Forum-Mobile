@@ -9,13 +9,17 @@ import { useContext, useEffect, useState } from "react";
 import { getForumApi } from "../utils/forumApi";
 import { UserContext } from "../contexts/user";
 import { PostCard } from "../components/Post";
-import { PostCardProps } from "../@types/objects";
 import { UserCard } from "../components/User";
+import { CardEditar } from "../components/CardEditar";
+import { CardDeletar } from "../components/CardDeletar";
 
 export function SearchScreen() {
   const [searchTerm, setSerchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const { user } = useContext(UserContext);
+
+  const [editPostOpen, setEditPostOpen] = useState(false);
+  const [deletePostOpen, setDeletePostOpen] = useState(false);
 
   //Filtrando todos os posts
   const handlePosts = async () => {
@@ -59,6 +63,22 @@ export function SearchScreen() {
       });
   };
 
+  function openEditPost() {
+    setEditPostOpen(!editPostOpen);
+  }
+
+  function getEditPostOpen() {
+    return editPostOpen;
+  }
+
+  function openDeletePost() {
+    setDeletePostOpen(!deletePostOpen);
+  }
+
+  function getDeletePostOpen() {
+    return deletePostOpen;
+  }
+
   useEffect(() => {
     handleUserPosts();
   }, []);
@@ -67,6 +87,20 @@ export function SearchScreen() {
   return (
     <View style={homeStyles.searchContainerView}>
       <SearchTitle></SearchTitle>
+      {editPostOpen ? <CardEditar
+        type="post"
+        // objectId={post.id}
+        objectId=""
+        closeFunc={openEditPost}
+        closeUseState={getEditPostOpen}
+      /> : null}
+      {deletePostOpen ? <CardDeletar
+        type="post"
+        // objectId={post.id}
+        objectId=""
+        closeFunc={openDeletePost}
+        closeUseState={getDeletePostOpen}
+      /> : null}
       <View style={searchStyles.ViewOnTop}>
         <View style={searchStyles.searchArea}>
           <View style={searchStyles.searchIcon}>
@@ -91,16 +125,8 @@ export function SearchScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView contentContainerStyle={
-        {
-
-        }
-      }
-        style={{
-          width: "100%",
-          flexGrow: 1,
-
-        }}
+      <ScrollView contentContainerStyle={{}}
+        style={{ width: "100%", flexGrow: 1 }}
       >
         <View style={searchStyles.postListView}>
           {searchResults.length > 0 ? (
@@ -125,6 +151,7 @@ export function SearchScreen() {
                     title={post.title}
                     content={post.content}
                     date={new Date(post.date)}
+                    screen="search"
                   ></PostCard>
                 );
               }
@@ -132,6 +159,7 @@ export function SearchScreen() {
           ) : (
             <View>
               <Loader
+                style={{ marginHorizontal: "47.5%" }}
                 stroke={"#fff"}
                 fill={"#00000000"}
                 width={25}

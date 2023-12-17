@@ -1,24 +1,17 @@
 import { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { X } from 'react-native-feather';
+import { X, Image, Edit } from 'react-native-feather';
 import * as ImagePicker from 'expo-image-picker';
 import { CardStyle } from "../styles/card";
 import { getForumApi } from "../utils/forumApi";
 import { UserContext } from "../contexts/user";
-import { User } from "../@types/objects";
+import { ModalProps, User } from "../@types/objects";
 
-interface Location {
-    lat: string;
-    lng: string;
-}
-
-interface Props {
-    closeFunc: () => void;
-    closeUseState: () => boolean;
+interface EditProfileProps extends ModalProps {
     changeUser: () => void;
 }
 
-export function EditarPerfil(props: Props) {
+export function EditarPerfil(props: EditProfileProps) {
     const [newUsername, setNewUsername] = useState('');
     const [newEmail, setNewEmail] = useState('');
 
@@ -118,13 +111,26 @@ export function EditarPerfil(props: Props) {
                         editable={true}
                     >{user?.email}</TextInput>
 
-                    <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleChoosePhoto}>
-                        <Text style={CardStyle.botaoText}>Mudar foto</Text>
-                    </TouchableOpacity>
+                    <View style={CardStyle.editProfileActions}>
+                        <TouchableOpacity
+                            style={[CardStyle.botaoCriar, CardStyle.editProfileActionBtn]}
+                            onPress={handleChoosePhoto}
+                        >
+                            <Image stroke="#000" fill="#00000000" ></Image>
+                            <Text style={CardStyle.botaoText}>Mudar foto</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleEditUser}>
-                        <Text style={CardStyle.botaoText}>Editar</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[CardStyle.botaoCriar, CardStyle.editProfileActionBtn, CardStyle.botaoEditarPerfil]}
+                            onPress={handleEditUser}
+                        >
+                            <Edit
+                                stroke="#000"
+                                fill="#0000"
+                            ></Edit>
+                            <Text style={CardStyle.botaoText}>Editar</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>

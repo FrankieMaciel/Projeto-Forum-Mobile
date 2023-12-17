@@ -39,6 +39,14 @@ export const postStyles = StyleSheet.create({
     borderWidth: vars.mainBorderWidth,
     borderRadius: 100,
   },
+  postActions: {
+    flexDirection: 'row',
+    gap: 20,
+    left: '25%',
+  },
+  actionsBtn: {
+    height: '70%'
+  },
   textBG: {
     backgroundColor: vars.bg,
     borderRadius: 10,

@@ -56,7 +56,7 @@ export function Comments() {
   }, []);
 
   useEffect(() => {
-    getComments();
+    onRefresh();
   }, []);
 
   return (

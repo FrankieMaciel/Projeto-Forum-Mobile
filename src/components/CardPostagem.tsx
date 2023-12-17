@@ -7,13 +7,9 @@ import * as UserData from "../utils/userData";
 import { getForumApi } from "../utils/forumApi";
 import vars from "../styles/root";
 import { UserContext } from "../contexts/user";
+import { ModalProps } from "../@types/objects";
 
-interface Props {
-    closeFunc: () => void;
-    closeUseState: () => boolean;
-}
-
-export function CriarPostagem(props: Props) {
+export function CriarPostagem(props: ModalProps) {
     const { user } = useContext(UserContext);
 
     const [inputTitulo, setInputTitulo] = useState('');

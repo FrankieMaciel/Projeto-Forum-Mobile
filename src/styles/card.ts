@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from "react-native";
 import vars from "./root";
 
 export const CardStyle = StyleSheet.create({
@@ -51,6 +51,10 @@ export const CardStyle = StyleSheet.create({
         fontSize: 20,
         height: 130
     },
+    cardText: {
+        color: vars.mainText,
+        fontSize: 20
+    },
     textCount: {
         color: vars.textLight,
         textAlign: 'right',
@@ -68,10 +72,33 @@ export const CardStyle = StyleSheet.create({
         padding: 10,
         marginHorizontal: '25%'
     },
+    editProfileActions: {
+        flexDirection: 'row',
+        marginTop: '5%',
+        justifyContent: "center",
+        gap: 40
+    },
+    editProfileActionBtn: {
+        marginHorizontal: 0,
+        flexDirection: 'row',
+        alignItems: "center",
+        gap: 10
+    },
+    botaoEditarPerfil: {
+        paddingHorizontal: '7.5%'
+    },
+    botaoDeletar: {
+        backgroundColor: vars.danger,
+        marginTop: '10%',
+        paddingHorizontal: '10%'
+    },
+    deletarText: {
+        color: vars.mainText
+    },
     fechar: {
         backgroundColor: vars.bg,
         borderRadius: 5,
         left: 130,
         marginBottom: 20,
     }
-})
+});
