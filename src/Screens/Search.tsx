@@ -13,55 +13,51 @@ import { PostCardProps } from "../@types/objects";
 import { UserCard } from "../components/User";
 
 export function SearchScreen() {
-    const [searchTerm, setSerchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState<any[]>([]);
-    const { user } = useContext(UserContext);
-    
-    //Filtrando todos os posts
-    const handlePosts = async () => {
-      const forumApi = await getForumApi();
-      console.log(searchTerm);
-      await forumApi.get(`/filterPosts/${searchTerm}`).
-      then(response =>{
-        const posts = response.data
-        console.log('Posts obtidos da API:', posts);
-        setSearchResults(posts);
-      })
-      .catch(error => {
-        console.error('Erro ao buscar posts na rota de filtro:', error);
-        throw error; 
-      })
+  const [searchTerm, setSerchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const { user } = useContext(UserContext);
 
-    }
-    // Filtrando usuário
-    const handleUsers = async () => {
-      const forumApi = await getForumApi();
-      await forumApi.get(`/filterUsers/${searchTerm}`).
-      then(response =>{
-        const posts = response.data
-        console.log('Posts obtidos da API:', posts);
-        setSearchResults(posts);
-      })
-      .catch(error => {
-        console.error('Erro ao buscar posts na rota de filtro:', error);
-        throw error; 
-      })
-
-    }
-
-    const handleUserPosts = async () => {
-      const forumApi = await getForumApi();
-      await forumApi.get(`/posts/user/${user.username}`).
-      then(response =>{
-        const posts = response.data
-        console.log('Posts obtidos da API:', posts);
+  //Filtrando todos os posts
+  const handlePosts = async () => {
+    const forumApi = await getForumApi();
+    await forumApi.get(`/filterPosts/${searchTerm}`).
+      then(response => {
+        const posts = response.data;
         setSearchResults(posts);
       })
       .catch(error => {
         console.error('Erro ao buscar posts na rota de filtro:', error);
         throw error;
+      });
+
+  };
+  // Filtrando usuário
+  const handleUsers = async () => {
+    const forumApi = await getForumApi();
+    await forumApi.get(`/filterUsers/${searchTerm}`).
+      then(response => {
+        const posts = response.data;
+        setSearchResults(posts);
       })
-    }
+      .catch(error => {
+        console.error('Erro ao buscar posts na rota de filtro:', error);
+        throw error;
+      });
+
+  };
+
+  const handleUserPosts = async () => {
+    const forumApi = await getForumApi();
+    await forumApi.get(`/posts/user/${user.username}`).
+      then(response => {
+        const posts = response.data;
+        setSearchResults(posts);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar posts na rota de filtro:', error);
+        throw error;
+      });
+  };
 
   useEffect(() => {
     handleUserPosts();
@@ -69,7 +65,7 @@ export function SearchScreen() {
 
 
   return (
-  <View style={homeStyles.searchContainerView}>
+    <View style={homeStyles.searchContainerView}>
       <SearchTitle></SearchTitle>
       <View style={searchStyles.ViewOnTop}>
         <View style={searchStyles.searchArea}>
@@ -95,56 +91,56 @@ export function SearchScreen() {
           </TouchableOpacity>
         </View>
       </View>
-        <ScrollView contentContainerStyle={
-          { 
-          
-          }
-          }
-          style={{
-            width: "100%",
-            flexGrow: 1,
+      <ScrollView contentContainerStyle={
+        {
 
-          }}
-          >
-          <View style={searchStyles.postListView}>
-            {searchResults.length > 0 ? (
-                searchResults.map(post => {
-                    if (post.email) {
-                        return (
-                          <UserCard 
-                            key={post._id}
-                            id={post._id} 
-                            username={post.username}
-                            profileURL={post.profileURL}
-                            email={post.email}
-                            score={post.score}                              
-                            ></UserCard>
-                        );
-                    } else {
-                        return (
-                            <PostCard
-                                key={post._id}
-                                id={post.id}
-                                user={post.user}
-                                title={post.title}
-                                content={post.content}
-                                date={new Date(post.date)}
-                            ></PostCard>
-                        );
-                    }
-                  })
-            ) : (
-                <View>
-                    <Loader
-                        stroke={"#fff"}
-                        fill={"#00000000"}
-                        width={25}
-                        height={25}
-                    ></Loader>
-                </View>
-            )}
+        }
+      }
+        style={{
+          width: "100%",
+          flexGrow: 1,
+
+        }}
+      >
+        <View style={searchStyles.postListView}>
+          {searchResults.length > 0 ? (
+            searchResults.map(post => {
+              if (post.email) {
+                return (
+                  <UserCard
+                    key={post._id}
+                    id={post._id}
+                    username={post.username}
+                    profileURL={post.profileURL}
+                    email={post.email}
+                    score={post.score}
+                  ></UserCard>
+                );
+              } else {
+                return (
+                  <PostCard
+                    key={post._id}
+                    id={post.id}
+                    user={post.user}
+                    title={post.title}
+                    content={post.content}
+                    date={new Date(post.date)}
+                  ></PostCard>
+                );
+              }
+            })
+          ) : (
+            <View>
+              <Loader
+                stroke={"#fff"}
+                fill={"#00000000"}
+                width={25}
+                height={25}
+              ></Loader>
+            </View>
+          )}
         </View>
-        </ScrollView>
+      </ScrollView>
     </View>
   );
 }

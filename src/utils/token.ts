@@ -6,7 +6,7 @@ const _retrieveData = async () => {
     if (token !== null) {
       return token;
     } else {
-      console.log('Nenhum token encontrado.');
+      console.error('Nenhum token encontrado.');
     }
   } catch (error) {
     console.error('Erro ao recuperar o token:', error);
@@ -30,19 +30,19 @@ const _deleteData = async () => {
   } catch (error) {
     console.error('Erro ao deletar token: ', error);
   }
-}
+};
 
 const _getHeader = async () => {
   return {
     headers: {
       'Authorization': await _retrieveData()
     }
-  }
-}
+  };
+};
 
 export {
   _retrieveData,
   _storeData,
   _deleteData,
   _getHeader
-}
+};

@@ -24,7 +24,6 @@ export default function Login() {
       email: emailText,
       password: passwordText
     };
-    console.log(dataToSend);
 
     const fetchData = async () => {
       const forumApi = await getForumApi();
@@ -32,14 +31,11 @@ export default function Login() {
         .then((response) => {
           const data = response.data;
           if (data.token) {
-            console.log('Dados recebidos:', data);
             Token._storeData(data.token);
             const dataTreated = treatData(data);
 
             UserData._storeData(dataTreated);
-            console.log(dataTreated);
             setUser(dataTreated);
-            console.log(user);
             navigation.navigate('Dashboard');
           } else {
             let erroMessage = JSON.parse(data.error);
@@ -66,8 +62,6 @@ export default function Login() {
   };
 
   const logUser = async () => {
-    console.log(user);
-
     const data = await UserData._retrieveData();
     if (data) {
       setUser(treatData(data));

@@ -37,7 +37,6 @@ export function Dashboard() {
             .then((response): void => {
                 const data = response.data;
                 if (!data) return;
-                console.log(data);
                 const dataTreated: PostCardProps[] = [];
                 for (let post of data) dataTreated.push({
                     id: post._id,
@@ -67,18 +66,18 @@ export function Dashboard() {
         fetch(imageUrl, {
             method: 'HEAD'
         })
-        .then(response => {
-            if (response.ok) {
-            console.log('A imagem existe!');
-            setProfileURL(imageUrl);
-            } else {
-            console.log('A imagem não foi encontrada.');
-            setProfileURL(`http://${host}:3000/public/custom-pfp${user.profileURL}`);
-            }
-        })
-        .catch(error => {
-            console.error('Ocorreu um erro ao verificar a existência da imagem:', error);
-        });
+            .then(response => {
+                if (response.ok) {
+                    console.error('A imagem existe!');
+                    setProfileURL(imageUrl);
+                } else {
+                    console.error('A imagem não foi encontrada.');
+                    setProfileURL(`http://${host}:3000/public/custom-pfp${user.profileURL}`);
+                }
+            })
+            .catch(error => {
+                console.error('Ocorreu um erro ao verificar a existência da imagem:', error);
+            });
     }
 
     useEffect(() => {

@@ -23,7 +23,6 @@ export function CriarComentario(props: Props) {
   let { closeUseState } = props;
 
   const handleCreatePost = async () => {
-    console.log(post);
     const dataToSend = {
       user: {
         id: user.id,
@@ -33,18 +32,14 @@ export function CriarComentario(props: Props) {
       postId: post.id,
       content: inputTexto,
     };
-    console.log(dataToSend);
 
     const fetchData = async () => {
       const forumApi = await getForumApi();
       await forumApi.post(`/comments`, dataToSend)
         .then(async response => {
           const data = response.data;
-          console.log('Dados recebidos: ', data);
           if (!data) {
             let erroMessage = JSON.parse(data.error);
-            console.log();
-            console.log(erroMessage[0]);
           };
         }).catch(error => console.error(error));
     };

@@ -4,18 +4,18 @@ import { PostContext } from "../contexts/post";
 import { RefreshControl, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { postStyles } from "../styles/post";
 import { CommentCard } from "../components/Comment";
-import { CommentCardProps } from "../@types/objects";
+import { CommentCardProps, PostCardProps } from "../@types/objects";
 import { getForumApi } from "../utils/forumApi";
 import { CriarComentario } from "../components/CardComentario";
 
 
 export function Comments() {
 
-  const mockPost = {
+  const mockPost: PostCardProps = {
     id: '1',
     title: "Teste",
     user: {
-      id: "123",
+      userID: "123",
       name: "Pessoa teste",
       profileURL: "./teste.png"
     },
@@ -56,7 +56,6 @@ export function Comments() {
   }, []);
 
   useEffect(() => {
-    // console.log(comments.length);
     getComments();
   }, []);
 
@@ -82,17 +81,15 @@ export function Comments() {
           </TouchableOpacity>
           <View style={postStyles.commentsContainer}>
             {comments.length > 0
-              ? (comments.map(comment => {
-                console.log(comment); return (
-                  <CommentCard
-                    key={comment.content + comment.date}
-                    user={comment.user}
-                    postId={post.id || ''}
-                    content={comment.content}
-                    date={new Date(comment.date)}
-                  ></CommentCard>
-                );
-              })
+              ? (comments.map(comment => (
+                <CommentCard
+                  key={comment.content + comment.date}
+                  user={comment.user}
+                  postId={post.id || ''}
+                  content={comment.content}
+                  date={new Date(comment.date)}
+                ></CommentCard>
+              ))
               ) : (
                 <Text style={postStyles.noComments}>Sem comentários...</Text>
               )}

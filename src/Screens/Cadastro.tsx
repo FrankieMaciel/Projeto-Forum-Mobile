@@ -41,7 +41,6 @@ export default function Cadastro() {
       await forumApi.post('/users', dataToSend)
         .then(async (response) => {
           const data = response.data;
-          console.log('Dados recebidos:', data);
           if (data.token) {
             await Token._storeData(data.token);
             const dataTreated = {
@@ -57,7 +56,7 @@ export default function Cadastro() {
             navigation.navigate('Dashboard');
           } else {
             let erroMessage = JSON.parse(data.error);
-            console.log(erroMessage[0]);
+            console.error(erroMessage[0]);
           }
         });
     };

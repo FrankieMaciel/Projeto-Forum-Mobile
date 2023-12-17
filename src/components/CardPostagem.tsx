@@ -24,7 +24,6 @@ export function CriarPostagem(props: Props) {
     let { closeUseState } = props;
 
     const handleCreatePost = async () => {
-        console.log(user);
         const dataToSend = {
             user: {
                 userID: user.id,
@@ -40,10 +39,8 @@ export function CriarPostagem(props: Props) {
             await forumApi.post(`/posts`, dataToSend)
                 .then(async response => {
                     const data = response.data;
-                    console.log('Dados recebidos: ', data);
                     if (!data) {
                         let erroMessage = JSON.parse(data.error);
-                        console.log(erroMessage[0]);
                     };
                 }).catch(error => console.error(error));
         };

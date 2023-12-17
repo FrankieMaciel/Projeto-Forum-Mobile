@@ -5,7 +5,7 @@ import { homeStyles } from "../styles/home";
 import { profileStyles } from "../styles/profile";
 import { useNavigation } from "@react-navigation/native";
 import * as UserData from "../utils/userData";
-import * as Token from "../utils/token"
+import * as Token from "../utils/token";
 import { EditarPerfil } from "../components/CardPerfil";
 import { getForumApi, host } from "../utils/forumApi";
 import { Image } from 'expo-image';
@@ -28,24 +28,23 @@ export function Profile() {
     await Token._deleteData();
     console.log('Usuário deslogado');
     navigation.navigate('Login');
-  }
+  };
 
   async function getProfilePic() {
-    console.log(user);
     const imageUrl = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
     fetch(imageUrl, {
       method: 'HEAD'
     })
-    .then(response => {
-      if (response.ok && user.id !== undefined) {
-        setProfileURL(imageUrl);
-      } else {
-        setProfileURL(`http://${host}:3000/public/custom-pfp${user.profileURL}`);
-      }
-    })
-    .catch(error => {
-      console.error('Ocorreu um erro ao verificar a existência da imagem:', error);
-    });
+      .then(response => {
+        if (response.ok && user.id !== undefined) {
+          setProfileURL(imageUrl);
+        } else {
+          setProfileURL(`http://${host}:3000/public/custom-pfp${user.profileURL}`);
+        }
+      })
+      .catch(error => {
+        console.error('Ocorreu um erro ao verificar a existência da imagem:', error);
+      });
   }
 
   const navigation = useNavigation();
@@ -72,7 +71,7 @@ export function Profile() {
 
   useEffect(() => {
     getProfilePic();
-}, []);
+  }, []);
 
   return (
     <View style={homeStyles.screen}>
