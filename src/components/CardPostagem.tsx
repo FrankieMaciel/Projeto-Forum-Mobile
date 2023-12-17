@@ -27,14 +27,13 @@ export function CriarPostagem(props: Props) {
         console.log(user);
         const dataToSend = {
             user: {
-                id: user?.id,
-                name: user?.username,
-                profileURL: user?.profileURL || ''
+                userID: user.id,
+                name: user.username,
+                profileURL: user.profileURL
             },
             title: inputTitulo,
             content: inputTexto,
         };
-        console.log(dataToSend);
 
         const fetchData = async () => {
             const forumApi = await getForumApi();
@@ -44,7 +43,6 @@ export function CriarPostagem(props: Props) {
                     console.log('Dados recebidos: ', data);
                     if (!data) {
                         let erroMessage = JSON.parse(data.error);
-                        console.log();
                         console.log(erroMessage[0]);
                     };
                 }).catch(error => console.error(error));

@@ -54,7 +54,6 @@ export default function Cadastro() {
 
             await UserData._storeData(dataTreated);
             setUser(dataTreated);
-            console.log(user);
             navigation.navigate('Dashboard');
           } else {
             let erroMessage = JSON.parse(data.error);

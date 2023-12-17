@@ -31,6 +31,7 @@ export function EditarPerfil(props: Props) {
             name:`${user.id}.jpg`,
             uri:imageURI,
         } as any);
+        console.log(user);
         const forumApi = await getForumApi();
         await forumApi.post('/users/profilePicture/' + user.id, formData,
         {
@@ -49,12 +50,13 @@ export function EditarPerfil(props: Props) {
         let {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status != 'granted') {
             alert("Precisamos de permissão para acessar as imagens!");
-            return;
         }
 
         let _image = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
+            aspect: [1, 1],
+            quality: 0.5
         });
         if (!_image.canceled) { 
             await uploadImageProfile(_image.assets[0].uri);

@@ -17,7 +17,7 @@ export interface ProviderProps {
 }
 
 export interface CardUser {
-  id: string;
+  userID: string;
   name: string;
   profileURL: string;
 }

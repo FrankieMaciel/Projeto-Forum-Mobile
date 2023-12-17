@@ -60,5 +60,14 @@ export const searchStyles = StyleSheet.create({
   },
   searchArea: {
 
+  },
+  ScrollView: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "red"
+  },
+  postListView: {
+    marginTop: 10,
+    width: "100%"
   }
 })

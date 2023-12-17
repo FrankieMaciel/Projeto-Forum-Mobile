@@ -18,6 +18,7 @@ export function Dashboard() {
     const [refreshing, setRefreshing] = useState(false);
     const [criarPostagemActive, setCriarPostagemActive] = useState(false);
     const [posts, setPosts] = useState<PostCardProps[]>([]);
+    const [profileURL, setProfileURL] = useState<string | null>(null);
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true);
@@ -36,12 +37,12 @@ export function Dashboard() {
             .then((response): void => {
                 const data = response.data;
                 if (!data) return;
-
+                console.log(data);
                 const dataTreated: PostCardProps[] = [];
                 for (let post of data) dataTreated.push({
                     id: post._id,
                     user: {
-                        id: post.user.id,
+                        userID: post.user.userID,
                         name: post.user.name,
                         profileURL: post.user.profileURL
                     },
@@ -61,13 +62,33 @@ export function Dashboard() {
         return criarPostagemActive;
     }
 
+    async function getProfilePic() {
+        const imageUrl = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
+        fetch(imageUrl, {
+            method: 'HEAD'
+        })
+        .then(response => {
+            if (response.ok) {
+            console.log('A imagem existe!');
+            setProfileURL(imageUrl);
+            } else {
+            console.log('A imagem não foi encontrada.');
+            setProfileURL(`http://${host}:3000/public/custom-pfp${user.profileURL}`);
+            }
+        })
+        .catch(error => {
+            console.error('Ocorreu um erro ao verificar a existência da imagem:', error);
+        });
+    }
+
     useEffect(() => {
         getPosts();
+        getProfilePic();
     }, []);
 
     return (
         <View style={homeStyles.screen}>
-            <PageTitulo pfpIcon={`http://${host}:3000/public/custom-pfp/${user.id}.jpg`}></PageTitulo>
+            <PageTitulo pfpIcon={profileURL ? profileURL : `http://${host}:3000/public/custom-pfp${user.profileURL}`}></PageTitulo>
             {criarPostagemActive ? <CriarPostagem closeFunc={showCriarPostagem} closeUseState={getCriarPostagemActive} /> : null}
             <ScrollView contentContainerStyle={{ flexGrow: 1, minHeight: '100%' }}
                 refreshControl={
@@ -85,7 +106,7 @@ export function Dashboard() {
                         {posts.length > 0 ? (
                             posts.map(post => (
                                 <PostCard
-                                    key={post.title}
+                                    key={post.id}
                                     id={post.id}
                                     user={post.user}
                                     title={post.title}

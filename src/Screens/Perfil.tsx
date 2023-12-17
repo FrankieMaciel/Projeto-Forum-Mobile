@@ -14,7 +14,7 @@ import { UserContext } from "../contexts/user";
 
 export function Profile() {
   const { user, setUser } = useContext(UserContext);
-
+  const [profileURL, setProfileURL] = useState<string | null>(null);
   const [editLocalizationOpen, setLocalizationOpen] = useState(false);
   const [editProfileOpen, setEditProfileOpen] = useState(false);
 
@@ -28,6 +28,24 @@ export function Profile() {
     await Token._deleteData();
     console.log('Usuário deslogado');
     navigation.navigate('Login');
+  }
+
+  async function getProfilePic() {
+    console.log(user);
+    const imageUrl = `http://${host}:3000/public/custom-pfp/${user.id}.jpg`;
+    fetch(imageUrl, {
+      method: 'HEAD'
+    })
+    .then(response => {
+      if (response.ok && user.id !== undefined) {
+        setProfileURL(imageUrl);
+      } else {
+        setProfileURL(`http://${host}:3000/public/custom-pfp${user.profileURL}`);
+      }
+    })
+    .catch(error => {
+      console.error('Ocorreu um erro ao verificar a existência da imagem:', error);
+    });
   }
 
   const navigation = useNavigation();
@@ -52,6 +70,10 @@ export function Profile() {
     return editLocalizationOpen;
   }
 
+  useEffect(() => {
+    getProfilePic();
+}, []);
+
   return (
     <View style={homeStyles.screen}>
       {editProfileOpen ? <EditarPerfil
@@ -70,7 +92,7 @@ export function Profile() {
             {
               user ?
                 <Image
-                  source={`http://${host}:3000/public/custom-pfp/${user.id}.jpg`}
+                  source={profileURL}
                   contentFit="fill"
                   style={
                     {

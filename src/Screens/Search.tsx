@@ -20,6 +20,7 @@ export function SearchScreen() {
     //Filtrando todos os posts
     const handlePosts = async () => {
       const forumApi = await getForumApi();
+      console.log(searchTerm);
       await forumApi.get(`/filterPosts/${searchTerm}`).
       then(response =>{
         const posts = response.data
@@ -93,55 +94,57 @@ export function SearchScreen() {
             <Text>Posts</Text>
           </TouchableOpacity>
         </View>
+      </View>
         <ScrollView contentContainerStyle={
           { 
-            flexGrow: 1, 
-            minHeight: '90%',
+          
           }
           }
           style={{
-            backgroundColor: 'red',
-            flex: 1,
+            width: "100%",
+            flexGrow: 1,
+
           }}
           >
-        <View style={homeStyles.postListView}>
-          {searchResults.length > 0 ? (
-              searchResults.map(post => {
-                  if (post.email) {
-                      return (
+          <View style={searchStyles.postListView}>
+            {searchResults.length > 0 ? (
+                searchResults.map(post => {
+                    if (post.email) {
+                        return (
                           <UserCard 
-                          id={post._id} 
-                          username={post.username}
-                          email={post.email}
-                          score={post.score}                              
-                          ></UserCard>
-                      );
-                  } else {
-                      return (
-                          <PostCard
-                              key={post.title}
-                              id={post.id}
-                              user={post.user}
-                              title={post.title}
-                              content={post.content}
-                              date={new Date(post.date)}
-                          ></PostCard>
-                      );
-                  }
-              })
-          ) : (
-              <View>
-                  <Loader
-                      stroke={"#fff"}
-                      fill={"#00000000"}
-                      width={25}
-                      height={25}
-                  ></Loader>
-              </View>
-          )}
-      </View>
-      </ScrollView>
-      </View>
+                            key={post._id}
+                            id={post._id} 
+                            username={post.username}
+                            profileURL={post.profileURL}
+                            email={post.email}
+                            score={post.score}                              
+                            ></UserCard>
+                        );
+                    } else {
+                        return (
+                            <PostCard
+                                key={post._id}
+                                id={post.id}
+                                user={post.user}
+                                title={post.title}
+                                content={post.content}
+                                date={new Date(post.date)}
+                            ></PostCard>
+                        );
+                    }
+                  })
+            ) : (
+                <View>
+                    <Loader
+                        stroke={"#fff"}
+                        fill={"#00000000"}
+                        width={25}
+                        height={25}
+                    ></Loader>
+                </View>
+            )}
+        </View>
+        </ScrollView>
     </View>
   );
 }

@@ -22,7 +22,8 @@ export const homeStyles = StyleSheet.create({
     marginBottom: 50
   },
   postListView: {
-    marginTop: 80
+    marginTop: 80,
+    width: "100%",
   },
   text: {
     color: "#fff",

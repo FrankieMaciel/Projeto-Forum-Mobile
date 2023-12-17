@@ -14,7 +14,7 @@ export const postStyles = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     paddingVertical: '5%',
-    paddingHorizontal: '2%'
+    paddingHorizontal: '2%',
   },
   postHeader: {
     display: 'flex',
@@ -22,6 +22,7 @@ export const postStyles = StyleSheet.create({
     justifyContent: 'flex-start',
     gap: 10,
     width: '100%',
+    marginBottom: 10,
   },
   headerTitle: {
     color: vars.mainText,
