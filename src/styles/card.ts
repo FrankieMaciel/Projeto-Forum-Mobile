@@ -90,7 +90,8 @@ export const CardStyle = StyleSheet.create({
     botaoDeletar: {
         backgroundColor: vars.danger,
         marginTop: '10%',
-        paddingHorizontal: '10%'
+        borderRadius: 30,
+        padding: 10,
     },
     deletarText: {
         color: vars.mainText

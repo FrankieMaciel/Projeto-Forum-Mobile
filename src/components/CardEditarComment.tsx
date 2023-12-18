@@ -1,39 +1,44 @@
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { X } from 'react-native-feather';
 import { CardStyle } from "../styles/card";
 import { getForumApi } from "../utils/forumApi";
 import vars from "../styles/root";
 import { UserContext } from "../contexts/user";
-import { PostContext } from "../contexts/post";
-import { ModalProps } from "../@types/objects";
+import { ActionModalProps } from "../@types/objects";
 
-export function CriarComentario(props: ModalProps) {
+interface EditProps extends ActionModalProps {
+  type: "post" | "comment";
+  contentText: string;
+}
+
+export function CardEditarComment(props: EditProps) {
   const { user } = useContext(UserContext);
-  const { post } = useContext(PostContext);
 
   const [inputTexto, setInputTexto] = useState('');
   const maxInputTexto = 500;
 
-  const { closeFunc } = props;
-  let { closeUseState } = props;
+  const { type, objectId, closeFunc } = props;
+  let { closeUseState, contentText } = props;
 
-  const handleCreatePost = async () => {
+  const handleEdit = async () => {
+    console.log(objectId);
     const dataToSend = {
       user: {
         userID: user.id,
         name: user.username,
-        profileURL: user.profileURL || ''
+        profileURL: user.profileURL
       },
-      postId: post.id,
       content: inputTexto,
     };
+    
 
     const fetchData = async () => {
       const forumApi = await getForumApi();
-      await forumApi.post(`/comments`, dataToSend)
+      await forumApi.post(`/comments/edit/${objectId}`, dataToSend)
         .then(async response => {
           const data = response.data;
+          console.log(data);
           if (!data) {
             let erroMessage = JSON.parse(data.error);
           };
@@ -65,11 +70,11 @@ export function CriarComentario(props: ModalProps) {
             onChangeText={setInputTexto}
             placeholder="Escreva algo..."
             placeholderTextColor={vars.textLight}
-          ></TextInput>
+          >{contentText}</TextInput>
           <Text style={CardStyle.textCount}>{inputTexto.length}/{maxInputTexto}</Text>
 
-          <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleCreatePost}>
-            <Text style={CardStyle.botaoText}>Enviar</Text>
+          <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleEdit}>
+            <Text style={CardStyle.botaoText}>Editar comentário</Text>
           </TouchableOpacity>
         </View>
       </View>

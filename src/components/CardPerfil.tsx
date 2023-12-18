@@ -67,17 +67,16 @@ export function EditarPerfil(props: EditProfileProps) {
             .then((response) => {
                 const data = response.data;
                 if (data) {
-
+                    console.log(data);
                     let obj: User = {
                         id: data._id,
                         username: data.username,
                         email: data.email,
                         score: data.score
                     };
-
                     setUser(obj);
                 }
-            }).catch(error => console.error(`Erro ao editar usuário: \n${error}`));
+            }).catch(error => {});
     };
 
     const {

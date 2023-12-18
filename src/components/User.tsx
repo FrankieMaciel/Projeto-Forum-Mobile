@@ -11,12 +11,18 @@ import { profileStyles } from "../styles/profile";
 import { host } from "../utils/forumApi";
 import { Image } from 'expo-image';
 
+interface ViewPostCardProps extends User {
+  selectPost: (id: string) => void;
+}
 
-export function UserCard({ id, profileURL, username, email, score }: User) {
+
+export function UserCard({ id, profileURL, username, email, score, selectPost }: ViewPostCardProps) {
 
   const [myprofileURL, setmyProfileURL] = useState<string | null>(null);
 
   const navigation = useNavigation();
+
+  selectPost(id);
 
   async function getProfilePic() {
     const imageUrl = `http://${host}:3000/public/custom-pfp/${id}.jpg`;

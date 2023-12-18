@@ -9,6 +9,8 @@ import { ActionModalProps } from "../@types/objects";
 
 interface EditProps extends ActionModalProps {
   type: "post" | "comment";
+  inputText: string;
+  contentText: string;
 }
 
 export function CardEditar(props: EditProps) {
@@ -19,9 +21,10 @@ export function CardEditar(props: EditProps) {
   const maxInputTexto = 500;
 
   const { type, objectId, closeFunc } = props;
-  let { closeUseState } = props;
+  let { closeUseState, inputText, contentText } = props;
 
   const handleEdit = async () => {
+    console.log(objectId);
     const dataToSend = {
       user: {
         userID: user.id,
@@ -33,14 +36,14 @@ export function CardEditar(props: EditProps) {
     };
 
     const fetchData = async () => {
-      // const forumApi = await getForumApi();
-      // await forumApi.post(`/posts`, dataToSend)
-      //   .then(async response => {
-      //     const data = response.data;
-      //     if (!data) {
-      //       let erroMessage = JSON.parse(data.error);
-      //     };
-      //   }).catch(error => console.error(error));
+      const forumApi = await getForumApi();
+      await forumApi.post(`/posts/edit/${objectId}`, dataToSend)
+        .then(async response => {
+          const data = response.data;
+          if (!data) {
+            let erroMessage = JSON.parse(data.error);
+          };
+        }).catch(error => console.error(error));
     };
     fetchData();
     closeFunc();
@@ -65,7 +68,7 @@ export function CardEditar(props: EditProps) {
             maxLength={50}
             onChangeText={setInputTitulo}
             placeholderTextColor={vars.textLight}
-          ></TextInput>
+          >{inputText}</TextInput>
 
           <TextInput
             style={CardStyle.inputTexto}
@@ -75,7 +78,7 @@ export function CardEditar(props: EditProps) {
             onChangeText={setInputTexto}
             placeholder="Escreva algo..."
             placeholderTextColor={vars.textLight}
-          ></TextInput>
+          >{contentText}</TextInput>
           <Text style={CardStyle.textCount}>{inputTexto.length}/{maxInputTexto}</Text>
 
           <TouchableOpacity style={CardStyle.botaoCriar} onPress={handleEdit}>

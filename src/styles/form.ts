@@ -11,7 +11,7 @@ export const formStyles = StyleSheet.create({
     backgroundColor: vars.bg,
     borderRadius: 10,
     width: 370,
-    marginTop: 100,
+    top: 100,
     padding: 20
   },
   cardTitle: {

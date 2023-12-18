@@ -26,7 +26,7 @@ export function Profile() {
   }
 
   const Logout = async () => {
-    // await UserData._deleteData();
+    await UserData._deleteData();
     await Token._deleteData();
     console.log('Usuário deslogado');
     navigation.navigate('Login');
@@ -99,6 +99,7 @@ export function Profile() {
         objectId={user.id}
         closeFunc={openDeleteModal}
         closeUseState={getDeleteProfileOpen}
+        logout={Logout}
       /> : null}
       <PerfilTitulo logout={Logout} ></PerfilTitulo>
       <View style={homeStyles.containerView}>

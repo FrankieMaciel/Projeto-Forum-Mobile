@@ -2,14 +2,16 @@ import { TouchableOpacity, View, Text } from "react-native";
 import { CardStyle } from "../styles/card";
 import { X } from "react-native-feather";
 import { ActionModalProps } from "../@types/objects";
+import { getForumApi } from "../utils/forumApi";
 
 interface DeleteProps extends ActionModalProps {
   type: "post" | "comment" | "user";
+  logout: () => void;
 }
 
 export const CardDeletar = (props: DeleteProps) => {
   const { type, objectId, closeFunc } = props;
-  let { closeUseState } = props;
+  let { closeUseState, logout } = props;
 
   let deleteText;
   switch (type) {
@@ -18,8 +20,22 @@ export const CardDeletar = (props: DeleteProps) => {
     case 'user': deleteText = 'seu perfil';
   }
 
-  function handleDelete() {
+  async function handleDelete() {
+    const forumApi = await getForumApi();
 
+        let ntype = 'posts';
+        if (type === 'comment') ntype = 'comments';
+        if (type === 'user') ntype = 'users';
+
+        await forumApi.get(`/${ntype}/delete/${objectId}`)
+        .then((response): void => {
+          console.log(response);
+        }).catch(error => console.error(error));
+        closeFunc();
+
+        if (type === 'user') {
+          logout();
+        }
   }
 
   return (
@@ -36,13 +52,12 @@ export const CardDeletar = (props: DeleteProps) => {
           />
         </TouchableOpacity>
         <Text style={CardStyle.cardText}>Deseja mesmo deletar {deleteText}?</Text>
-        <View>
           <TouchableOpacity
-            style={[CardStyle.botaoCriar, CardStyle.botaoDeletar]}
+            onPress={handleDelete}
+            style={CardStyle.botaoDeletar}
           >
-            <Text style={CardStyle.deletarText} onPress={handleDelete}>Sim, deletar</Text>
+            <Text style={CardStyle.deletarText}>Sim, deletar</Text>
           </TouchableOpacity>
-        </View>
       </View>
     </View>
   );

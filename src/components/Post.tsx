@@ -17,9 +17,12 @@ interface ViewPostCardProps extends PostCardProps {
   screen: 'dashboard' | 'search';
   openEditFunc?: () => void;
   openDeleteFunc?: () => void;
+  selectPost: (postInfo: any) => void;
 }
 
-export function PostCard({ id, user, title, content, date, screen, openEditFunc, openDeleteFunc }: ViewPostCardProps) {
+export function PostCard(
+  { id, user, title, content, date, screen, selectPost, openEditFunc, openDeleteFunc}
+  : ViewPostCardProps) {
   const { post, setPost } = useContext(PostContext);
   const currentUser = useContext(UserContext);
   const [profileURL, setProfileURL] = useState<string | null>(null);
@@ -31,6 +34,30 @@ export function PostCard({ id, user, title, content, date, screen, openEditFunc,
   function handleComments(): void {
     setPost({ id, user, title, content, date });
     navigation.navigate('Comments');
+  }
+
+  function hadleEdit() {
+
+    let obj = {
+      id: id,
+      title: title,
+      content: content
+    }
+
+    selectPost(obj);
+    if (openEditFunc) openEditFunc(); 
+  }
+
+  function hadleDelete() {
+
+    let obj = {
+      id: id,
+      title: title,
+      content: content
+    }
+
+    selectPost(obj);
+    if (openDeleteFunc) openDeleteFunc(); 
   }
 
   async function getProfilePic() {
@@ -82,7 +109,7 @@ export function PostCard({ id, user, title, content, date, screen, openEditFunc,
             ? <View style={postStyles.postActions}>
               <TouchableOpacity
                 style={postStyles.actionsBtn}
-                onPress={openEditFunc}
+                onPress={hadleEdit}
               >
                 <Edit
                   stroke={"#fff"}
@@ -91,7 +118,7 @@ export function PostCard({ id, user, title, content, date, screen, openEditFunc,
               </TouchableOpacity>
               <TouchableOpacity
                 style={postStyles.actionsBtn}
-                onPress={openDeleteFunc}
+                onPress={hadleDelete}
               >
                 <Trash2
                   stroke={vars.danger}

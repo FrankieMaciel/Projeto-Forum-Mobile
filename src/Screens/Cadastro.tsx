@@ -42,6 +42,7 @@ export default function Cadastro() {
         .then(async (response) => {
           const data = response.data;
           if (data.token) {
+            console.log(data.token);
             await Token._storeData(data.token);
             const dataTreated = {
               id: data.id,

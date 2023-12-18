@@ -42,7 +42,7 @@ export const postStyles = StyleSheet.create({
   postActions: {
     flexDirection: 'row',
     gap: 20,
-    left: '25%',
+    left: '15%',
   },
   actionsBtn: {
     height: '70%'

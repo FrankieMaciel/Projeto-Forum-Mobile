@@ -12,9 +12,9 @@ const _retrieveData = async () => {
   try {
     const data = await AsyncStorage.getItem('@UserData:key');
     if (data !== null) return JSON.parse(data);
-    console.error('Nenhum usuário encontrado.');
+    // console.error('Nenhum usuário encontrado.');
   } catch (error) {
-    console.error('Erro ao recuperar dados do usuário: ', error);
+    // console.error('Erro ao recuperar dados do usuário: ', error);
   }
 };
 
@@ -22,7 +22,7 @@ const _storeData = async (data: IUserData) => {
   try {
     await AsyncStorage.setItem('@UserData:key', JSON.stringify(data));
   } catch (error) {
-    console.error('Erro ao armazenar dados do usuário: ', error);
+    // console.error('Erro ao armazenar dados do usuário: ', error);
   }
 };
 
@@ -32,7 +32,7 @@ const _deleteData = async () => {
     console.log(await AsyncStorage.getItem('@UserData:key'));
 
   } catch (error) {
-    console.error('Erro ao deletar dados do usuário: ', error);
+    // console.error('Erro ao deletar dados do usuário: ', error);
   }
 };
 

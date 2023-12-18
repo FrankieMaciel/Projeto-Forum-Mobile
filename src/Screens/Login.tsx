@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LoginTitulo, Titulo } from '../components/Titulo';
 import { formStyles } from '../styles/form';
@@ -18,6 +18,20 @@ export default function Login() {
 
   const navigation = useNavigation();
 
+  const exibirAlertaNaoCadastrado = () => {
+    Alert.alert(
+      'Usuário não cadastrado',
+      'Por favor, cadastre-se para acessar esta funcionalidade.',
+      [
+        {
+          text: 'OK',
+          onPress: () => console.log('Usuário não cadastrado - OK Pressionado')
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
   const handleLogin = async () => {
 
     const dataToSend = {
@@ -28,10 +42,11 @@ export default function Login() {
     const fetchData = async () => {
       const forumApi = await getForumApi();
       await forumApi.post('/users/login/', dataToSend)
-        .then((response) => {
+        .then(async (response) => {
           const data = response.data;
           if (data.token) {
-            Token._storeData(data.token);
+            await Token._storeData(data.token);
+            console.log(data.token);
             const dataTreated = treatData(data);
 
             UserData._storeData(dataTreated);
@@ -42,7 +57,7 @@ export default function Login() {
             throw new Error(erroMessage[0]);
           }
         })
-        .catch(error => console.error('Erro ao receber informações do login: ', error));
+        .catch(error => { exibirAlertaNaoCadastrado()});
     };
     await fetchData()
       .then(async () => {

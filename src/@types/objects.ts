@@ -43,5 +43,5 @@ export interface ModalProps {
 }
 
 export interface ActionModalProps extends ModalProps {
-  objectId: string;
+  objectId: string | null;
 }

@@ -3,7 +3,7 @@ import { homeStyles } from "../styles/home";
 import { SearchTitle } from "../components/Titulo";
 import { searchStyles } from "../styles/search";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Loader, Search } from 'react-native-feather';
+import { Search, Wind } from 'react-native-feather';
 import vars from "../styles/root";
 import { useContext, useEffect, useState } from "react";
 import { getForumApi } from "../utils/forumApi";
@@ -18,6 +18,8 @@ export function SearchScreen() {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const { user } = useContext(UserContext);
 
+  const [selectedPost, setSelectedPost] = useState<any>(null);
+
   const [editPostOpen, setEditPostOpen] = useState(false);
   const [deletePostOpen, setDeletePostOpen] = useState(false);
 
@@ -30,7 +32,7 @@ export function SearchScreen() {
         setSearchResults(posts);
       })
       .catch(error => {
-        console.error('Erro ao buscar posts na rota de filtro:', error);
+        // console.error('Erro ao buscar posts na rota de filtro:', error);
         throw error;
       });
 
@@ -44,11 +46,15 @@ export function SearchScreen() {
         setSearchResults(posts);
       })
       .catch(error => {
-        console.error('Erro ao buscar posts na rota de filtro:', error);
+        // console.error('Erro ao buscar posts na rota de filtro:', error);
         throw error;
       });
 
   };
+
+  function setTheSelectedPost(postInfo: any) {
+    setSelectedPost(postInfo);
+  }
 
   const handleUserPosts = async () => {
     const forumApi = await getForumApi();
@@ -58,7 +64,7 @@ export function SearchScreen() {
         setSearchResults(posts);
       })
       .catch(error => {
-        console.error('Erro ao buscar posts na rota de filtro:', error);
+        // console.error('Erro ao buscar posts na rota de filtro:', error);
         throw error;
       });
   };
@@ -79,6 +85,10 @@ export function SearchScreen() {
     return deletePostOpen;
   }
 
+  function none() {
+
+  }
+
   useEffect(() => {
     handleUserPosts();
   }, []);
@@ -89,17 +99,18 @@ export function SearchScreen() {
       <SearchTitle></SearchTitle>
       {editPostOpen ? <CardEditar
         type="post"
-        // objectId={post.id}
-        objectId=""
+        objectId={selectedPost.id}
         closeFunc={openEditPost}
-        closeUseState={getEditPostOpen}
-      /> : null}
+        closeUseState={getEditPostOpen} 
+        inputText={selectedPost.title} 
+        contentText={selectedPost.content}      
+        /> : null}
       {deletePostOpen ? <CardDeletar
         type="post"
-        // objectId={post.id}
-        objectId=""
+        objectId={selectedPost.id}
         closeFunc={openDeletePost}
         closeUseState={getDeletePostOpen}
+        logout={none} 
       /> : null}
       <View style={searchStyles.ViewOnTop}>
         <View style={searchStyles.searchArea}>
@@ -130,41 +141,57 @@ export function SearchScreen() {
       >
         <View style={searchStyles.postListView}>
           {searchResults.length > 0 ? (
-            searchResults.map(post => {
+            searchResults.map((post, index) => {
               if (post.email) {
                 return (
                   <UserCard
-                    key={post._id}
+                    key={index}
                     id={post._id}
                     username={post.username}
                     profileURL={post.profileURL}
                     email={post.email}
                     score={post.score}
+                    selectPost={setTheSelectedPost}
                   ></UserCard>
                 );
               } else {
                 return (
                   <PostCard
-                    key={post._id}
-                    id={post.id}
+                    key={index}
+                    id={post._id}
                     user={post.user}
                     title={post.title}
                     content={post.content}
                     date={new Date(post.date)}
                     screen="search"
+                    selectPost={setTheSelectedPost}
+                    openEditFunc={openEditPost}
+                    openDeleteFunc={openDeletePost}
+
                   ></PostCard>
                 );
               }
             })
           ) : (
-            <View>
-              <Loader
-                style={{ marginHorizontal: "47.5%" }}
-                stroke={"#fff"}
-                fill={"#00000000"}
-                width={25}
-                height={25}
-              ></Loader>
+            <View style={{
+                width: "100%",
+                height: "80%",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: 50,
+            }}>
+                <Wind
+                    stroke={"#ffffff50"}
+                    fill={"#00000000"}
+                    width={50}
+                    height={50}
+                ></Wind>
+                <Text style={{
+                    color: "#ffffff50",
+                    fontSize: 15,
+                    marginTop: 10,
+                    // padding: 20,
+                }}>Não encontramos nenhuma postagem por enquanto...</Text>
             </View>
           )}
         </View>

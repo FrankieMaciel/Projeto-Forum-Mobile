@@ -6,10 +6,10 @@ const _retrieveData = async () => {
     if (token !== null) {
       return token;
     } else {
-      console.error('Nenhum token encontrado.');
+      // console.error('Nenhum token encontrado.');
     }
   } catch (error) {
-    console.error('Erro ao recuperar o token:', error);
+    // console.error('Erro ao recuperar o token:', error);
   }
 };
 
@@ -20,7 +20,7 @@ const _storeData = async (token: string) => {
       token,
     );
   } catch (error) {
-    console.error('Erro ao armazenar token: ', error);
+    // console.error('Erro ao armazenar token: ', error);
   }
 };
 
@@ -28,7 +28,7 @@ const _deleteData = async () => {
   try {
     await AsyncStorage.removeItem('@AccessToken:key');
   } catch (error) {
-    console.error('Erro ao deletar token: ', error);
+    // console.error('Erro ao deletar token: ', error);
   }
 };
 
